@@ -1,0 +1,32 @@
+<mvc:View controllerName="co.haina.datalakemanagerapp.controller.admindashboard"
+    xmlns:mvc="sap.ui.core.mvc" displayBlock="true"
+    xmlns="sap.m"
+    xmlns:tnt="sap.tnt" height="100%" class="side-navigation-demo">
+    <Button text="Toggle Collapse/Expand" icon="sap-icon://menu2" press=".onCollapseExpandPress" />
+    <tnt:ToolPage id="toolPage">
+        <tnt:sideContent>                        
+            <tnt:SideNavigation id="sideNavigation" itemSelect="onItemSelect">
+                <tnt:NavigationList>
+                    <tnt:NavigationListItem text="{i18n>log}" icon="sap-icon://it-host">
+                        <tnt:NavigationListItem text="{i18n>logapp}" id="logapp" key="rtLogapp" />
+                        <tnt:NavigationListItem text="{i18n>logupload}" id="logupload" key="rtLogupload" />
+                    </tnt:NavigationListItem>
+                    <tnt:NavigationListItem text="{i18n>setting}" icon="sap-icon://user-settings">
+                        <tnt:NavigationListItem text="{i18n>meter}" />
+                        <tnt:NavigationListItem text="{i18n>parameters}" />
+                        <tnt:NavigationListItem text="{i18n>uploadConf}" />
+                    </tnt:NavigationListItem>
+                </tnt:NavigationList>
+                <tnt:fixedItem>
+                    <tnt:NavigationList>
+                        <tnt:NavigationListItem text="{i18n>logapp}" key="rtLogapp" />
+                        <tnt:NavigationListItem text="{i18n>parameters}" icon="sap-icon://settings" />
+                    </tnt:NavigationList>
+                </tnt:fixedItem>
+            </tnt:SideNavigation>
+        </tnt:sideContent>
+        <tnt:mainContents>
+            <App id="parentNavContainer"/>
+        </tnt:mainContents>
+    </tnt:ToolPage>
+</mvc:View>

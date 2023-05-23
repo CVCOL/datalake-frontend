@@ -1,0 +1,140 @@
+{
+  "_version": "1.49.0",
+  "sap.app": {
+    "id": "co.haina.datalakemanagerapp",
+    "type": "application",
+    "i18n": "i18n/i18n.properties",
+    "applicationVersion": {
+      "version": "0.0.1"
+    },
+    "title": "{{appTitle}}",
+    "description": "{{appDescription}}",
+    "resources": "resources.json",
+    "sourceTemplate": {
+      "id": "@sap/generator-fiori:basic",
+      "version": "1.9.6",
+      "toolsId": "63408a4e-0c14-45f8-97c0-9f1c3b47992c"
+    }
+  },
+  "sap.ui": {
+    "technology": "UI5",
+    "icons": {
+      "icon": "",
+      "favIcon": "",
+      "phone": "",
+      "phone@2": "",
+      "tablet": "",
+      "tablet@2": ""
+    },
+    "deviceTypes": {
+      "desktop": true,
+      "tablet": true,
+      "phone": true
+    }
+  },
+  "sap.ui5": {
+    "flexEnabled": true,
+    "dependencies": {
+      "minUI5Version": "1.114.0",
+      "libs": {
+        "sap.m": {},
+        "sap.ui.core": {},
+        "sap.f": {},
+        "sap.suite.ui.generic.template": {},
+        "sap.ui.comp": {},
+        "sap.ui.generic.app": {},
+        "sap.ui.table": {},
+        "sap.ushell": {}
+      }
+    },
+    "contentDensities": {
+      "compact": true,
+      "cozy": true
+    },
+    "models": {
+      "i18n": {
+        "type": "sap.ui.model.resource.ResourceModel",
+        "settings": {
+          "bundleName": "co.haina.datalakemanagerapp.i18n.i18n"
+        }
+      }
+    },
+    "resources": {
+      "css": [
+        {
+          "uri": "css/style.css"
+        }
+      ]
+    },
+    "routing": {
+      "config": {
+        "routerClass": "sap.m.routing.Router",
+        "viewType": "XML",
+        "async": true,
+        "viewPath": "co.haina.datalakemanagerapp.view",
+        "controlAggregation": "pages",
+        "controlId": "app",
+        "clearControlAggregation": false
+      },
+      "routes": [
+        {
+          "name": "Routeadmindashboard",
+          "pattern": ":?query:",
+          "target": [
+            "Targetadmindashboard"
+          ]
+        },
+        { 
+          "name": "home",
+					"pattern": "",
+					"target": "parentTarget"
+				},
+        {
+          "name":"rtLogapp",
+					"pattern": "rtLogapp",
+					"target": "TargetrtLogapp"
+				},
+        {
+          "name":"rtLogupload",
+					"pattern": "rtLogupload",
+					"target": "TargetrtLogupload"
+				}
+      ],
+      "targets": {
+        "Targetadmindashboard": {
+          "viewType": "XML",
+          "transition": "slide",
+          "clearControlAggregation": false,
+          "viewId": "admindashboard",
+          "viewName": "admindashboard"
+        },
+        "TargetrtLogapp": {
+					"viewId": "applicationlog",
+          "viewPath": "co.haina.datalakemanagerapp.view",
+					"viewName": "applicationlog",
+          "viewType": "XML",
+					"parent": "Targetadmindashboard",
+					"controlId": "parentNavContainer",
+					"controlAggregation": "pages",
+					"transition": "slide"
+				},
+        "TargetrtLogupload": {
+					"viewId": "uploadlog",
+          "viewPath": "co.haina.datalakemanagerapp.view",
+					"viewName": "uploadlog",
+          "viewType": "XML",
+					"parent": "Targetadmindashboard",
+					"controlId": "parentNavContainer",
+					"controlAggregation": "pages",
+					"transition": "slide"
+				}
+      }
+    },
+    "rootView": {
+      "viewName": "co.haina.datalakemanagerapp.view.App",
+      "type": "XML",
+      "async": true,
+      "id": "App"
+    }
+  }
+}

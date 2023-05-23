@@ -1,0 +1,17 @@
+<mvc:View controllerName="co.haina.datalakemanagerapp.controller.uploadlog"
+	xmlns:html="http://www.w3.org/1999/xhtml" 
+	xmlns:mvc="sap.ui.core.mvc" 
+	displayBlock="true"
+	xmlns="sap.m"
+    height="100%" 
+	busyIndicatorDelay="0">
+	<Page id="_IDGenPage1" showHeader="true" enableScrolling="false" title="{modelView>/title}" busy="{modelView>/busy}" class="sapUiContentPadding"
+		busyIndicatorDelay="0">
+		<content>		
+		<Button
+		text="Pagina prueba upload log"
+		icon="sap-icon://menu2"
+		press=".onCollapseExpandPress" />	
+		</content>		
+	</Page>
+</mvc:View>
