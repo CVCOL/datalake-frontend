@@ -3,15 +3,100 @@
 	xmlns:mvc="sap.ui.core.mvc" 
 	displayBlock="true"
 	xmlns="sap.m"
+	xmlns:c="sap.ui.core"
+	xmlns:tbl="sap.ui.table"
     height="100%" 
 	busyIndicatorDelay="0">
 	<Page id="_IDGenPage1" showHeader="true" enableScrolling="false" title="{modelView>/title}" busy="{modelView>/busy}" class="sapUiContentPadding"
 		busyIndicatorDelay="0">
 		<content>		
-		<Button
-		text="Pagina prueba"
-		icon="sap-icon://menu2"
-		press=".onCollapseExpandPress" />	
+		<FlexBox id="_IDGenFlexBox1" height="auto" alignItems="Start" justifyContent="Start">
+				<items>
+					<HBox id="_IDGenHBox1">
+						<items>
+							<Button id="_IDGenButton1" icon="sap-icon://save" text="{i18n>Guardar}" tooltip="{i18n>Guardar}" press="saveCommodities"/>
+						</items>
+					</HBox>
+					<HBox id="_IDGenHBox2" alignItems="Center" justifyContent="End" width="100%">
+						<items>
+							<ObjectStatus id="objStatus" title="{i18n>status}" text="{modelView>/versionStatus}" state="Warning"/>
+						</items>
+					</HBox>
+				</items>
+			</FlexBox>
+			<tbl:Table id="tblCommodities" rows="{/lstItemsCommodities}" selectionMode="Single" visibleRowCountMode="Auto" rowActionCount="1"
+				class="sapUiSizeCompact" enableColumnFreeze="true">
+				<tbl:extension>
+					<OverflowToolbar id="_IDGenOverflowToolbar1">
+						<content>
+							<ComboBox id="cmbYear" items="{path: 'ModelSimulador>/periodoSet', filters: [{ path: 'GoupYear', operator: 'EQ', value1: 'X' }] }"
+								width="5rem" placeholder="{i18n>Year}" visible="true">
+								<items>
+									<c:ListItem id="_IDGenListItem1" key="{ModelSimulador>Year}" text="{ModelSimulador>Year}"/>
+								</items>
+							</ComboBox>
+							<ComboBox id="cmbPlant" placeholder="{i18n>Plant}" width="7rem" visible="true" showSecondaryValues="true" filterSecondaryValues="true">
+							</ComboBox>
+							<Button id="_IDGenButton3" icon="sap-icon://search" press="onFilterCommodities" visible="true"/>
+							<ToolbarSpacer id="_IDGenToolbarSpacer1"/>
+							<Button id="_IDGenButton4" icon="sap-icon://alert" text="{= ${message>/}.length }" visible="{= ${message>/}.length > 0 }" type="Emphasized"
+								press="onMessagePopoverPress"/>
+							<Button id="_IDGenButton5" icon="sap-icon://sys-next-page" text="{i18n>Exportar}" tooltip="{i18n>Exportar}" press="onDataExport"/>							
+							<Button id="btnAdmin" icon="sap-icon://factory" type="Emphasized" text="{i18n>Administrar}" tooltip="{i18n>Administrar}"
+								press="onGoToIdCommoditieTable"/>
+						</content>
+					</OverflowToolbar>
+				</tbl:extension>
+				<tbl:columns>
+					<tbl:Column id="_IDGenColumn1" width="7rem" name="IdCommoditie" filterProperty="IdCommoditie">
+						<Label id="_IDGenLabel1" text="Fecha"/>
+						<tbl:template>
+							<Text id="_IDGenText1" text="{IdCommoditie}" wrapping="false"/>
+						</tbl:template>
+					</tbl:Column>
+					<tbl:Column id="_IDGenColumn2" width="11rem" name="Descripcion" filterProperty="Descripcion">
+						<Label id="_IDGenLabel2" text="Hora"/>
+						<tbl:template>
+							<Text id="_IDGenText2" text="{Descripcion}" wrapping="false"/>
+						</tbl:template>
+					</tbl:Column>
+					<tbl:Column id="_IDGenColumn3" width="7rem" name="Sociedad" filterProperty="Sociedad">
+						<Label id="_IDGenLabel3" text="Origen"/>
+						<tbl:template>
+							<Text id="_IDGenText3" text="{Sociedad}" wrapping="false"/>							
+						</tbl:template>
+					</tbl:Column>
+					<tbl:Column id="_IDGenColumn4" width="6rem" name="Centro" filterProperty="Centro">
+						<Label id="_IDGenLabel4" text="Mensaje"/>
+						<tbl:template>
+							<Text id="_IDGenText4" text="{Centro}" wrapping="false"/>
+						</tbl:template>
+					</tbl:Column>
+					<tbl:Column id="_IDGenColumn5" width="6rem" name="Moneda" filterProperty="Moneda">
+						<Label id="_IDGenLabel5" text="Tipo"/>						
+					</tbl:Column>
+					<tbl:Column id="_IDGenColumn6" width="6rem" name="UnidadMedida">
+						<Label id="_IDGenLabel6" text="Reproducible"/>
+						<tbl:template>
+							<ComboBox id="idComboBoxUnidadesMedida" selectionChange="onChangeUM" showSecondaryValues="true" filterSecondaryValues="true"
+								value="{UnidadMedida}" selectedKey="{UnidadMedida}" editable="{editable}"
+								items="{ path: '/LstUnidadesMedida', sorter: { path: 'Msehl' }, templateShareable:true }">
+								<c:ListItem id="_IDGenListItem3" key="{Msehi}" text="{Msehi}" additionalText="{Msehl}"/>
+							</ComboBox>
+						</tbl:template>
+					</tbl:Column>					
+				</tbl:columns>
+				<tbl:rowActionTemplate>
+					<tbl:RowAction id="_IDGenRowAction1">
+						<tbl:items>
+							<tbl:RowActionItem id="_IDGenRowActionItem1" type="Navigation" text="{i18n>Edit}" press="handleEditPress" icon="sap-icon://edit"></tbl:RowActionItem>
+						</tbl:items>
+					</tbl:RowAction>
+				</tbl:rowActionTemplate>
+				<tbl:rowSettingsTemplate>
+					<tbl:RowSettings id="_IDGenRowSettings1" highlight="{highlight}"/>
+				</tbl:rowSettingsTemplate>
+			</tbl:Table>
 		</content>		
 	</Page>
 </mvc:View>

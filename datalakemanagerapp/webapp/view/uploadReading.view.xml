@@ -1,0 +1,14 @@
+<mvc:View xmlns:vbm="sap.ui.vbm" controllerName="co.haina.datalakemanagerapp.controller.uploadReading"
+	xmlns:mvc="sap.ui.core.mvc" displayBlock="true"
+	xmlns:m="sap.m"
+	xmlns:u="sap.ui.unified">
+	<m:Page id="page" title="{i18n>title}">
+		<m:content>
+			<m:VBox id="_IDGenVBox1">
+				<m:Panel id="_IDGenPanel1" headerText="Lecturas Manuales">
+					<u:FileUploader id="LecturasManuales" name="LecturasManuales" buttonText="{i18n>uploadFileReadings}" icon="sap-icon://sys-prev-page" tooltip="{i18n>uploadFileReadings}" uploadComplete="onFileUploadComplete" change="onFileUpload" sameFilenameAllowed="true"/>
+				</m:Panel>
+			</m:VBox>
+		</m:content>
+	</m:Page>
+</mvc:View>

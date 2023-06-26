@@ -98,6 +98,16 @@
           "name":"rtLogupload",
 					"pattern": "rtLogupload",
 					"target": "TargetrtLogupload"
+				},
+        {
+          "name":"rtUploadsource",
+					"pattern": "rtUploadsource",
+					"target": "TargetrtUploadsource"
+				},
+        {
+          "name":"rtUploadreadings",
+					"pattern": "rtUploadreadings",
+					"target": "TargetrtUploadreadings"
 				}
       ],
       "targets": {
@@ -112,6 +122,26 @@
 					"viewId": "applicationlog",
           "viewPath": "co.haina.datalakemanagerapp.view",
 					"viewName": "applicationlog",
+          "viewType": "XML",
+					"parent": "Targetadmindashboard",
+					"controlId": "parentNavContainer",
+					"controlAggregation": "pages",
+					"transition": "slide"
+				},
+        "TargetrtUploadsource": {
+					"viewId": "uploadData",
+          "viewPath": "co.haina.datalakemanagerapp.view",
+					"viewName": "uploadData",
+          "viewType": "XML",
+					"parent": "Targetadmindashboard",
+					"controlId": "parentNavContainer",
+					"controlAggregation": "pages",
+					"transition": "slide"
+				},
+        "TargetrtUploadreadings": {
+					"viewId": "uploadReading",
+          "viewPath": "co.haina.datalakemanagerapp.view",
+					"viewName": "uploadReading",
           "viewType": "XML",
 					"parent": "Targetadmindashboard",
 					"controlId": "parentNavContainer",
