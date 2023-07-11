@@ -7,6 +7,9 @@
         <tnt:sideContent>                        
             <tnt:SideNavigation id="sideNavigation" itemSelect="onItemSelect">
                 <tnt:NavigationList id="_IDGenNavigationList1">
+                    <tnt:NavigationListItem id="_IDGenNavigationListItem11"  text="{i18n>Monitor}" icon="sap-icon://sys-monitor">
+                        <tnt:NavigationListItem id="_IDGenNavigationListItem12"  text="{i18n>MonitorReading}" key="rtMonitor" />                        
+                    </tnt:NavigationListItem>
                     <tnt:NavigationListItem id="_IDGenNavigationListItem1" text="{i18n>upload}" icon="sap-icon://add-document">
                         <tnt:NavigationListItem id="_IDGenNavigationListItem2" text="{i18n>uploadsource}" key="rtUploadsource" />
                         <tnt:NavigationListItem id="_IDGenNavigationListItem3" text="{i18n>uploadreadings}" key="rtUploadreadings" />
@@ -23,6 +26,7 @@
                 </tnt:NavigationList>
                 <tnt:fixedItem>
                     <tnt:NavigationList id="_IDGenNavigationList2">
+                        <tnt:NavigationListItem id="_navItLogin" text="{i18n>logging}" key="rtlogging" icon="sap-icon://role" />
                         <tnt:NavigationListItem id="_IDGenNavigationListItem9" text="{i18n>logapp}" key="rtLogapp" />
                         <tnt:NavigationListItem id="_IDGenNavigationListItem10" text="{i18n>parameters}" icon="sap-icon://settings" />
                     </tnt:NavigationList>

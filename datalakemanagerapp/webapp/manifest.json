@@ -90,6 +90,11 @@
 					"target": "parentTarget"
 				},
         {
+          "name":"rtMonitor",
+					"pattern": "rtMonitor",
+					"target": "TargetrtMonitor"
+				},
+        {
           "name":"rtLogapp",
 					"pattern": "rtLogapp",
 					"target": "TargetrtLogapp"
@@ -118,6 +123,16 @@
           "viewId": "admindashboard",
           "viewName": "admindashboard"
         },
+        "TargetrtMonitor": {
+					"viewId": "readingMonitor",
+          "viewPath": "co.haina.datalakemanagerapp.view",
+					"viewName": "readingMonitor",
+          "viewType": "XML",
+					"parent": "Targetadmindashboard",
+					"controlId": "parentNavContainer",
+					"controlAggregation": "pages",
+					"transition": "slide"
+				},
         "TargetrtLogapp": {
 					"viewId": "applicationlog",
           "viewPath": "co.haina.datalakemanagerapp.view",

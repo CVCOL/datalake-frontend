@@ -1,5 +1,5 @@
 sap.ui.define([
-    "sap/ui/core/mvc/Controller"
+    "./BaseController"
 ],
     /**
      * @param {typeof sap.ui.core.mvc.Controller} Controller
@@ -9,9 +9,17 @@ sap.ui.define([
 
         return Controller.extend("co.haina.datalakemanagerapp.controller.admindashboard", {
             onInit: function () {
+                this.registerMessageManager();
+                this.openApiLogin();
 
             },
             onItemSelect: function (oEvent) {
+
+                //Inicio de sesion en DataLake Api Repository
+                if (oEvent.getParameter("item").getProperty("key") === "rtlogging") {
+                    this.openApiLogin();
+                    return;
+                }
 
                 if (oEvent.getParameter("item").getProperty("key") === "rtHomeExpanded") {
                     var toolPageCurrent = this.byId("toolPage");

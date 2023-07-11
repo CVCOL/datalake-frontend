@@ -34,21 +34,17 @@ sap.ui.define([
             onFileUpload: function(oEvent) {
                 var oFileUploader = oEvent.getSource();
                 var file = oEvent.getParameter("files")[0];
-                var token = "";			
-                var baseurl = "https://dkpolaris.eastus.azurecontainer.io/"; 
+                var token = "";
                 var form = new FormData();
           
                 form.append("file", file);
                 form.append("idFile", oFileUploader.getName() );
                 form.append("User", 'polarissrv' );
-                form.append("FilePeriod", this.byId("FilePeriod").getValue() );
-                    
-                baseurl = "http://localhost:8002/";  
-                            
-                token = this.getToke(baseurl);			
+       
+                token = this.getToke();			
                 
                 var settings = {
-                                "url": baseurl+"uploadfile",
+                                "url": this.baseurl+"uploadfile",
                                 "method": "POST",
                                 "timeout": 0,
                                 "headers": {								
@@ -63,29 +59,8 @@ sap.ui.define([
         
                 $.ajax(settings);
     
-            },
-    
-            getToke: function(baseurl) {
-                
-                var url = baseurl + 'token';			
-                
-                var token = $.ajax({
-                    url: url,
-                    async: false,
-                    method: 'POST',
-                    timeout: 0,
-                    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-                    data: {
-                        "grant_type": "password",
-                        "username": "polarissrv",
-                        "password": "23Haina*Pol+"
-                    },
-                    success: function(result) { },
-                    error: function(e) { console.log(e.message); }
-                });						
-                
-                return token.responseJSON.access_token;
             }
+            
         });
     
     });
