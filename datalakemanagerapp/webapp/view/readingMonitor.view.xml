@@ -1,341 +1,221 @@
-<mvc:View xmlns:mvc="sap.ui.core.mvc" controllerName="co.haina.datalakemanagerapp.controller.readingMonitor" 
-xmlns="sap.m" xmlns:layout="sap.ui.layout">
+<mvc:View xmlns:mvc="sap.ui.core.mvc" controllerName="co.haina.datalakemanagerapp.controller.readingMonitor"
+    xmlns="sap.m"
+    xmlns:layout="sap.ui.layout"
+    xmlns:ui="sap.ui.table">
     <Page showHeader="true" title="{i18n>MonitorReading}" showFooter="true" showNavButton="false">
-        <content>
+        <content>            
             <IconTabBar expandable="false" expanded="true" applyContentPadding="false" backgroundDesign="Solid" upperCase="false" visible="true" selectedKey="Ok">
                 <items>
-                    <IconTabFilter icon="sap-icon://complete" iconColor="Default" text="Completas" count="5" design="Vertical" showAll="false" textDirection="Inherit" enabled="true" visible="true" iconDensityAware="false">
+                    <IconTabFilter icon="sap-icon://complete" iconColor="Default" text="Completas" count="{/CompleteProfileValuesCount}" design="Vertical" showAll="false" textDirection="Inherit" enabled="true" visible="true" iconDensityAware="false">
                         <content>
-                            <Table width="auto" noDataText="No data" mode="None" showSeparators="All" growing="true" growingThreshold="20" growingScrollToLoad="true" class="sapUiResponsiveMargin">
-                                <infoToolbar/>
-                                <headerToolbar>
-                                    <OverflowToolbar width="auto" height="auto" design="Transparent" visible="true" enabled="true">
+                            <ui:Table id="tblComplete" rows="{/CompleteProfileValues}" width="auto" noDataText="{i18n>noData}" mode="None" showSeparators="All" growing="true" growingThreshold="20" growingScrollToLoad="true" class="sapUiResponsiveMargin">
+
+                                <ui:extension>
+                                    <OverflowToolbar width="100%" height="auto" design="Transparent" visible="true" enabled="true">
                                         <content>
-                                            <Text text="Work Items (" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
-                                            <Text text="23" width="17px" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
-                                            <Text text=")" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
-                                            <ToolbarSpacer width=""/>
-                                            <SearchField placeholder="Search" showSearchButton="true" visible="true" width="auto"/>
-                                            <Title text="Items (3)" titleStyle="Auto" width="auto" textAlign="Begin" visible="true" wrapping="false"/>
-                                            <OverflowToolbarButton text="Sort" type="Transparent" icon="sap-icon://sort" iconFirst="true" width="auto" enabled="true" visible="true" iconDensityAware="false"/>
+                                            <Label text="{i18n>dateFrom}" labelFor="dtFrom"/>
+                                            <DatePicker id="dtFrom" width="22%" value="{
+                                                            'path':'viewModel>/valueDateFrom',
+                                                            'type':'sap.ui.model.type.Date',
+                                                            'formatOptions': {
+                                                                'pattern': 'yyyy-MM-dd'
+                                                            }
+                                                        }" class="sapUiSmallMarginBottom"/>
+                                            <Label text="{i18n>dateTo}" labelFor="dtFrom"/>
+                                            <DatePicker id="dtTo" width="22%" value="{
+                                                            'path':'viewModel>/valueDateTo',
+                                                            'type':'sap.ui.model.type.Date',
+                                                            'formatOptions': {
+                                                                'pattern': 'yyyy-MM-dd'
+                                                            }
+                                                        }" class="sapUiSmallMarginBottom"/>
+                                            
+                                            <Input id="inpProfile" type="Text" value="000000000000100005" />
+                                            <Button icon="sap-icon://search" id="btnSearch" text="{i18n>search}" press="_getCompleteProfileValues" />
+                                            <Text text="Items ({/CompleteProfileValuesCount})" width="auto" maxLines="1" wrapping="false" textAlign="End" textDirection="Inherit" visible="true"/>
                                         </content>
                                     </OverflowToolbar>
-                                </headerToolbar>
-                                <columns>
-                                    <Column width="auto" hAlign="Left" vAlign="Top" minScreenWidth="Phone" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">
-                                        <header>
-                                            <Text text="SERIALNO 1" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
-                                        </header>
-                                        <footer/>
-                                    </Column>
-                                    <Column width="170px" hAlign="Left" vAlign="Top" minScreenWidth="Tablet" demandPopin="true" popinDisplay="WithoutHeader" mergeDuplicates="false">
-                                        <header>
-                                            <Text text="Desc Med 1" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
-                                        </header>
-                                        <footer/>
-                                    </Column>
-                                    <Column width="auto" hAlign="Left" vAlign="Top" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">
-                                        <header>
-                                            <Text text="SERIALNO 2" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
-                                        </header>
-                                        <footer/>
-                                    </Column>
-                                    <Column width="auto" hAlign="Left" vAlign="Top" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">
-                                        <header>
-                                            <Text text="Desc Med 2" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
-                                        </header>
-                                        <footer/>
-                                    </Column>
-                                    <Column width="auto" hAlign="Left" vAlign="Top" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">
-                                        <header>
-                                            <Text text="Fecha" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
-                                        </header>
-                                        <footer/>
-                                    </Column>
-                                    <Column width="auto" hAlign="Left" vAlign="Top" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">
-                                        <header>
-                                            <Text text="Intervalo" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
-                                        </header>
-                                        <footer/>
-                                    </Column>
-                                    <Column width="auto" hAlign="Left" vAlign="Top" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Block" mergeDuplicates="false">
-                                        <header>
-                                            <Text text="Med Ppal" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
-                                        </header>
-                                        <footer/>
-                                    </Column>
-                                    <Column width="auto" hAlign="Left" vAlign="Top" minScreenWidth="Desktop" demandPopin="false" popinDisplay="Inline" mergeDuplicates="false">
-                                        <header>
-                                            <Text text="Med Respaldo" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
-                                        </header>
-                                        <footer/>
-                                    </Column>
-                                    <Column width="auto" hAlign="Left" vAlign="Top" minScreenWidth="Tablet" demandPopin="false" popinDisplay="Inline" mergeDuplicates="false">
-                                        <header>
-                                            <Text text="Med Manual" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
-                                        </header>
-                                        <footer/>
-                                    </Column>
-                                    <Column width="auto" hAlign="Left" vAlign="Top" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">
-                                        <header>
-                                            <Text text="UOM" width="64.00298309326172px" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
-                                        </header>
-                                        <footer/>
-                                    </Column>
-                                    <Column width="auto" hAlign="Left" vAlign="Top" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">
-                                        <header>
-                                            <Text text="Eviado" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
-                                        </header>
-                                        <footer/>
-                                    </Column>
-                                </columns>
-                                <items>
-                                    <ColumnListItem type="Active">
-                                        <cells>
-                                            <Link text="23762348763" textAlign="Begin" width="auto" target="_blank" wrapping="false" enabled="true" visible="true" emphasized="false" subtle="false"/>
-                                            <Text text="AK_012 Revoked" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
-                                            <Text text="256983" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
-                                            <layout:HorizontalLayout>
-                                                <layout:content/>
-                                            </layout:HorizontalLayout>
-                                            <Text text="01.06.2023" width="91.94048309326172px" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
-                                            <Text text="21:15:00" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
-                                            <Text text="101,56" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
-                                            <Text text="101,56" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
-                                            <Link text="-" textAlign="Begin" width="auto" target="_blank" wrapping="false" enabled="true" visible="true" emphasized="false" subtle="false"/>
-                                            <Text text="kWh" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
-                                            <Text text="01.06.2023" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
-                                        </cells>
-                                    </ColumnListItem>
-                                    <ColumnListItem type="Active">
-                                        <cells>
-                                            <Link text="10437652876" textAlign="Begin" width="auto" target="_blank" wrapping="false" enabled="true" visible="true" emphasized="false" subtle="false"/>
-                                            <Text text="Regular Check" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
-                                            <Text text="9865234" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
-                                            <layout:HorizontalLayout>
-                                                <layout:content/>
-                                            </layout:HorizontalLayout>
-                                            <Text text="01.06.2023" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
-                                            <Text text="09:30:00" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
-                                            <Text text="0" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
-                                            <Text text="0" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
-                                            <Link text="305" textAlign="Begin" width="auto" target="_blank" wrapping="false" enabled="true" visible="true" emphasized="false" subtle="false"/>
-                                            <Text text="MGW" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
-                                            <Text text="06.06.2023" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
-                                        </cells>
-                                    </ColumnListItem>
-                                    <ColumnListItem type="Active">
-                                        <cells>
-                                            <Link text="56729183674" textAlign="Begin" width="auto" target="_blank" wrapping="false" enabled="true" visible="true" emphasized="false" subtle="false"/>
-                                            <Text text="Regular returns of material" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
-                                            <Text text="89657" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
-                                            <layout:HorizontalLayout>
-                                                <layout:content/>
-                                            </layout:HorizontalLayout>
-                                            <layout:HorizontalLayout>
-                                                <layout:content/>
-                                            </layout:HorizontalLayout>
-                                            <layout:HorizontalLayout>
-                                                <layout:content/>
-                                            </layout:HorizontalLayout>
-                                            <Text text="63" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
-                                            <Text text="63" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
-                                            <Link text="-" textAlign="Begin" width="auto" target="_blank" wrapping="false" enabled="true" visible="true" emphasized="false" subtle="false"/>
-                                            <Text text="kWh" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
-                                            <Text text="07.06.2023" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
-                                        </cells>
-                                    </ColumnListItem>
-                                </items>
-                            </Table>
+                                </ui:extension>
+                                <ui:columns>
+                                    <ui:Column width="auto" hAlign="Left" vAlign="Top" minScreenWidth="Phone" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">
+                                        <Label text="{i18n>serialNo1}" />
+                                        <ui:template>
+                                            <Text text="{Profile}" wrapping="false"/>
+                                        </ui:template>
+                                    </ui:Column>
+                                    <ui:Column width="170px" hAlign="Left" vAlign="Top" minScreenWidth="Tablet" demandPopin="true" popinDisplay="WithoutHeader" mergeDuplicates="false">
+                                        <Label text="{i18n>descSerialNo1}"/>
+                                        <ui:template>
+                                            <Text text="{ProfileText}" wrapping="false"/>
+                                        </ui:template>
+                                    </ui:Column>
+                                    <ui:Column width="auto" hAlign="Left" vAlign="Top" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">
+                                        <Label text="{i18n>serialNo2}"/>
+                                        <ui:template>
+                                            <Text text="{Profile}" wrapping="false"/>
+                                        </ui:template>
+                                    </ui:Column>
+                                    <ui:Column width="auto" hAlign="Left" vAlign="Top" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">
+
+                                        <Label text="{i18n>descSerialNo1}" />
+                                        <ui:template>
+                                            <Text text="{ProfileText}" wrapping="false"/>
+                                        </ui:template>
+                                    </ui:Column>
+                                    <ui:Column width="auto" hAlign="Left" vAlign="Top" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">
+
+                                        <Label text="{i18n>profDate}" />
+                                        <ui:template>
+                                            <Text text="{ProfDate}" wrapping="false"/>
+                                        </ui:template>
+                                    </ui:Column>
+                                    <ui:Column width="auto" hAlign="Left" vAlign="Top" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">
+
+                                        <Label text="{i18n>interval}" />
+                                        <ui:template>
+                                            <Text text="{ProfTime}" wrapping="false"/>
+                                        </ui:template>
+
+                                    </ui:Column>
+                                    <ui:Column width="auto" hAlign="Left" vAlign="Top" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Block" mergeDuplicates="false">
+
+                                        <Label text="{i18n>ProfValue1}" />
+                                        <ui:template>
+                                            <Text text="{Value}" wrapping="false"/>
+                                        </ui:template>
+
+                                    </ui:Column>
+                                    <ui:Column width="auto" hAlign="Left" vAlign="Top" minScreenWidth="Desktop" demandPopin="false" popinDisplay="Inline" mergeDuplicates="false">
+
+                                        <Label text="{i18n>ProfValue2}" />
+                                        <ui:template>
+                                            <Text text="{Value}" wrapping="false"/>
+                                        </ui:template>
+
+                                    </ui:Column>
+                                    <ui:Column width="auto" hAlign="Left" vAlign="Top" minScreenWidth="Tablet" demandPopin="false" popinDisplay="Inline" mergeDuplicates="false">
+
+                                        <Label text="{i18n>ProfValueContingency}" />
+                                        <ui:template>
+                                            <Text text="{ContingencyValue}" wrapping="false"/>
+                                        </ui:template>
+
+                                    </ui:Column>
+                                    <ui:Column width="auto" hAlign="Left" vAlign="Top" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">
+                                        <Label text="{i18n>UOM}" />
+                                        <ui:template>
+                                            <Text text="{UnitOfMeasure}" wrapping="false"/>
+                                        </ui:template>
+                                    </ui:Column>
+                                    <ui:Column width="auto" hAlign="Left" vAlign="Top" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">
+                                        <Label text="{i18n>shippingDate}" />
+                                        <ui:template>
+                                            <Text text="{SAPshippingDate}" wrapping="false"/>
+                                        </ui:template>
+                                    </ui:Column>
+                                </ui:columns>
+                            </ui:Table>
                         </content>
                     </IconTabFilter>
-                    <IconTabFilter icon="sap-icon://desktop-mobile" iconColor="Default" text="Faltantes" count="4" design="Vertical" showAll="false" textDirection="Inherit" enabled="true" visible="true" iconDensityAware="false">
+                    <IconTabFilter icon="sap-icon://error" iconColor="Default" text="Faltantes" count="{/MissingProfileValuesCount}" design="Vertical" showAll="false" textDirection="Inherit" enabled="true" visible="true" iconDensityAware="false">
                         <content>
-                            <Table width="auto" noDataText="No data" mode="None" showSeparators="All" growing="true" growingThreshold="20" growingScrollToLoad="true" class="sapUiResponsiveMargin">
-                                <infoToolbar>
-                                    <Toolbar width="100%" height="auto" design="Auto" visible="false" enabled="true">
-                                        <content>
-                                            <Label text="Label" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
-                                        </content>
-                                    </Toolbar>
-                                </infoToolbar>
-                                <headerToolbar>
+                            <ui:Table id="tblMissing" width="auto" noDataText="{i18n>noData}" mode="None" showSeparators="All" growing="true" growingThreshold="20" growingScrollToLoad="true" class="sapUiResponsiveMargin">
+                                <ui:extension>
                                     <OverflowToolbar width="auto" height="auto" design="Transparent" visible="true" enabled="true">
                                         <content>
-                                            <Title text="Items (3)" titleStyle="Auto" width="auto" textAlign="Begin" visible="true" wrapping="false"/>
-                                            <ToolbarSpacer width=""/>
-                                            <OverflowToolbarButton text="Sort" type="Transparent" icon="sap-icon://sort" iconFirst="true" width="auto" enabled="true" visible="true" iconDensityAware="false"/>
-                                            <OverflowToolbarButton text="Filter" type="Transparent" icon="sap-icon://filter" iconFirst="true" width="auto" enabled="true" visible="true" iconDensityAware="false"/>
-                                            <OverflowToolbarButton text="Group" type="Transparent" icon="sap-icon://group-2" iconFirst="true" width="auto" enabled="true" visible="true" iconDensityAware="false"/>
-                                            <OverflowToolbarButton text="Settings" type="Transparent" icon="sap-icon://action-settings" iconFirst="true" width="auto" enabled="true" visible="true" iconDensityAware="false"/>
+                                            <Label text="{i18n>dateFrom}" labelFor="dtFromM"/>
+                                            <DatePicker id="dtFromM" width="20%" value="{
+                                                            'path':'viewModel>/valueDateFrom',
+                                                            'type':'sap.ui.model.type.Date',
+                                                            'formatOptions': {
+                                                                'pattern': 'yyyy-MM-dd'
+                                                            }
+                                                        }" class="sapUiSmallMarginBottom"/>
+                                            <Label text="{i18n>dateTo}" labelFor="dtFromM"/>
+                                            <DatePicker id="dtToM" width="20%" value="{
+                                                            'path':'viewModel>/valueDateTo',
+                                                            'type':'sap.ui.model.type.Date',
+                                                            'formatOptions': {
+                                                                'pattern': 'yyyy-MM-dd'
+                                                            }
+                                                        }" class="sapUiSmallMarginBottom"/>
+                                            <Button icon="sap-icon://search" text="{i18n>search}" press="_getMissingReading" />
                                         </content>
                                     </OverflowToolbar>
-                                </headerToolbar>
-                                <columns>
-                                    <Column width="auto" hAlign="Left" vAlign="Top" minScreenWidth="Phone" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">
-                                        <header>
-                                            <Text text="SERIALNO 1" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
-                                        </header>
-                                        <footer/>
-                                    </Column>
-                                    <Column width="170px" hAlign="Left" vAlign="Top" minScreenWidth="Tablet" demandPopin="true" popinDisplay="WithoutHeader" mergeDuplicates="false">
-                                        <header>
-                                            <Text text="Desc Med 1" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
-                                        </header>
-                                        <footer/>
-                                    </Column>
-                                    <Column width="auto" hAlign="Left" vAlign="Top" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">
-                                        <header>
-                                            <Text text="SERIALNO 2" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
-                                        </header>
-                                        <footer/>
-                                    </Column>
-                                    <Column width="auto" hAlign="Left" vAlign="Top" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">
-                                        <header>
-                                            <Text text="Desc Med 2" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
-                                        </header>
-                                        <footer/>
-                                    </Column>
-                                    <Column width="80px" hAlign="Left" vAlign="Top" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">
-                                        <header>
-                                            <Text text="Fecha" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
-                                        </header>
-                                        <footer/>
-                                    </Column>
-                                    <Column width="80px" hAlign="Left" vAlign="Top" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">
-                                        <header>
-                                            <Text text="Intervalo" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
-                                        </header>
-                                        <footer/>
-                                    </Column>
-                                    <Column width="85px" hAlign="Left" vAlign="Top" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Block" mergeDuplicates="false">
-                                        <header>
-                                            <Text text="Med Ppal" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
-                                        </header>
-                                        <footer/>
-                                    </Column>
-                                    <Column width="85px" hAlign="Left" vAlign="Top" minScreenWidth="Desktop" demandPopin="false" popinDisplay="Inline" mergeDuplicates="false">
-                                        <header>
-                                            <Text text="Med Respaldo" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
-                                        </header>
-                                        <footer/>
-                                    </Column>
-                                    <Column width="auto" hAlign="Left" vAlign="Top" minScreenWidth="Tablet" demandPopin="false" popinDisplay="Inline" mergeDuplicates="false">
-                                        <header>
-                                            <Text text="Med Manual" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
-                                        </header>
-                                        <footer/>
-                                    </Column>
-                                    <Column width="150px" hAlign="Left" vAlign="Top" minScreenWidth="Desktop" demandPopin="false" popinDisplay="Inline" mergeDuplicates="false">
-                                        <header>
-                                            <Text text="Motivo" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
-                                        </header>
-                                        <footer/>
-                                    </Column>
-                                    <Column width="auto" hAlign="Left" vAlign="Top" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">
-                                        <header>
-                                            <Text text="Observación" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
-                                        </header>
-                                        <footer/>
-                                    </Column>
-                                </columns>
-                                <items>
-                                    <ColumnListItem type="Active">
-                                        <cells>
-                                            <Link text="1022388" textAlign="Begin" width="auto" target="_blank" wrapping="false" enabled="true" visible="true" emphasized="false" subtle="false"/>
-                                            <Text text="AK_012 Revoked" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
-                                            <Text text="20018" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
-                                            <layout:HorizontalLayout>
-                                                <layout:content/>
-                                            </layout:HorizontalLayout>
-                                            <layout:HorizontalLayout>
-                                                <layout:content/>
-                                            </layout:HorizontalLayout>
-                                            <Text text="10:15:00" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
-                                            <Text text="100" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
-                                            <Text text="" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
-                                            <Input type="Text" showValueHelp="false" enabled="true" visible="true" width="auto" valueHelpOnly="false" required="false" valueStateText="Invalid entry" maxLength="0"/>
-                                            <TextArea value="Estimación Emergencia Contingencia" rows="2" cols="30" maxLength="0" wrapping="Hard" enabled="true" required="false" valueStateText="Invalid entry" visible="true"/>
-                                            <TextArea rows="2" cols="20" maxLength="0" wrapping="None" enabled="true" required="false" valueStateText="Invalid entry" visible="true"/>
-                                        </cells>
-                                    </ColumnListItem>
-                                    <ColumnListItem type="Active">
-                                        <cells>
-                                            <Link text="102238820018" textAlign="Begin" width="auto" target="_blank" wrapping="false" enabled="true" visible="true" emphasized="false" subtle="false"/>
-                                            <Text text="Regular Check" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
-                                            <Text text="58124785" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
-                                            <layout:HorizontalLayout>
-                                                <layout:content/>
-                                            </layout:HorizontalLayout>
-                                            <layout:HorizontalLayout>
-                                                <layout:content/>
-                                            </layout:HorizontalLayout>
-                                            <layout:HorizontalLayout>
-                                                <layout:content/>
-                                            </layout:HorizontalLayout>
-                                            <Text text="50" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
-                                            <Text text="" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
-                                            <Input type="Text" showValueHelp="false" enabled="true" visible="true" width="auto" valueHelpOnly="false" required="false" valueStateText="Invalid entry" maxLength="0"/>
-                                            <Text text="" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
-                                            <layout:HorizontalLayout>
-                                                <layout:content/>
-                                            </layout:HorizontalLayout>
-                                        </cells>
-                                    </ColumnListItem>
-                                    <ColumnListItem type="Active">
-                                        <cells>
-                                            <Link text="102238820018" textAlign="Begin" width="auto" target="_blank" wrapping="false" enabled="true" visible="true" emphasized="false" subtle="false"/>
-                                            <Text text="Regular returns of material" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
-                                            <Text text="41257" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
-                                            <layout:HorizontalLayout>
-                                                <layout:content/>
-                                            </layout:HorizontalLayout>
-                                            <layout:HorizontalLayout>
-                                                <layout:content/>
-                                            </layout:HorizontalLayout>
-                                            <layout:HorizontalLayout>
-                                                <layout:content/>
-                                            </layout:HorizontalLayout>
-                                            <Text text="" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
-                                            <Text text="182,3" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
-                                            <Input type="Text" showValueHelp="false" enabled="true" visible="true" width="auto" valueHelpOnly="false" required="false" valueStateText="Invalid entry" maxLength="0"/>
-                                            <Text text="" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
-                                            <layout:HorizontalLayout>
-                                                <layout:content/>
-                                            </layout:HorizontalLayout>
-                                        </cells>
-                                    </ColumnListItem>
-                                    <ColumnListItem type="Active">
-                                        <cells>
-                                            <Link text="102238820034" textAlign="Begin" width="auto" target="_blank" wrapping="false" enabled="true" visible="true" emphasized="false" subtle="false"/>
-                                            <Text text="A-B45 Revoked on delivery" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
-                                            <Text text="1245483" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
-                                            <layout:HorizontalLayout>
-                                                <layout:content/>
-                                            </layout:HorizontalLayout>
-                                            <layout:HorizontalLayout>
-                                                <layout:content/>
-                                            </layout:HorizontalLayout>
-                                            <layout:HorizontalLayout>
-                                                <layout:content/>
-                                            </layout:HorizontalLayout>
-                                            <Text text="289,5" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
-                                            <Text text="" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
-                                            <Input type="Text" showValueHelp="false" enabled="true" visible="true" width="auto" valueHelpOnly="false" required="false" valueStateText="Invalid entry" maxLength="0"/>
-                                            <Text text="" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
-                                            <layout:HorizontalLayout>
-                                                <layout:content/>
-                                            </layout:HorizontalLayout>
-                                        </cells>
-                                    </ColumnListItem>
-                                </items>
-                            </Table>
+                                </ui:extension>
+                                 <!-- <ui:columns>
+                                   <ui:Column width="auto" hAlign="Left" vAlign="Top" minScreenWidth="Phone" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">
+
+                                        <Text text="SERIALNO 1" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+                                    </ui:Column>
+                                    <ui:Column width="170px" hAlign="Left" vAlign="Top" minScreenWidth="Tablet" demandPopin="true" popinDisplay="WithoutHeader" mergeDuplicates="false">
+
+                                        <Text text="Desc Med 1" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+
+
+                                    </ui:Column>
+                                    <ui:Column width="auto" hAlign="Left" vAlign="Top" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">
+
+                                        <Text text="SERIALNO 2" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+
+
+                                    </ui:Column>
+                                    <ui:Column width="auto" hAlign="Left" vAlign="Top" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">
+
+                                        <Text text="Desc Med 2" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+
+
+                                    </ui:Column>
+                                    <ui:Column width="80px" hAlign="Left" vAlign="Top" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">
+
+                                        <Text text="Fecha" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+
+
+                                    </ui:Column>
+                                    <ui:Column width="80px" hAlign="Left" vAlign="Top" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">
+
+                                        <Text text="Intervalo" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+
+
+                                    </ui:Column>
+                                    <ui:Column width="85px" hAlign="Left" vAlign="Top" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Block" mergeDuplicates="false">
+
+                                        <Text text="Med Ppal" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+
+
+                                    </ui:Column>
+                                    <ui:Column width="85px" hAlign="Left" vAlign="Top" minScreenWidth="Desktop" demandPopin="false" popinDisplay="Inline" mergeDuplicates="false">
+
+                                        <Text text="Med Respaldo" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+
+
+                                    </ui:Column>
+                                    <ui:Column width="auto" hAlign="Left" vAlign="Top" minScreenWidth="Tablet" demandPopin="false" popinDisplay="Inline" mergeDuplicates="false">
+
+                                        <Text text="Med Manual" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+
+
+                                    </ui:Column>
+                                    <ui:Column width="150px" hAlign="Left" vAlign="Top" minScreenWidth="Desktop" demandPopin="false" popinDisplay="Inline" mergeDuplicates="false">
+
+                                        <Text text="Motivo" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+
+
+                                    </ui:Column>
+                                    <ui:Column width="auto" hAlign="Left" vAlign="Top" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">
+
+                                        <Text text="Observación" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+
+
+                                    </ui:Column>
+                                </ui:columns> -->
+                            </ui:Table>
                         </content>
                     </IconTabFilter>
-                    <IconTabFilter icon="" iconColor="Critical" text="Inconsistentes" count="3" design="Vertical" showAll="false" textDirection="Inherit" enabled="true" visible="true" iconDensityAware="false">
+                    <IconTabFilter icon="sap-icon://direction-arrows" iconColor="Critical" text="Inconsistentes" count="3" design="Vertical" showAll="false" textDirection="Inherit" enabled="true" visible="true" iconDensityAware="false">
                         <content>
                             <Text text="" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
-                            <Table width="auto" noDataText="No data" mode="None" showSeparators="All" growing="true" growingThreshold="20" growingScrollToLoad="true" class="sapUiResponsiveMargin">
+                            <!-- <Table  id=tblInconsitency" width="auto" noDataText="No data" mode="None" showSeparators="All" growing="true" growingThreshold="20" growingScrollToLoad="true" class="sapUiResponsiveMargin">
                                 <infoToolbar/>
                                 <headerToolbar>
                                     <OverflowToolbar width="auto" height="auto" design="Transparent" visible="true" enabled="true">
@@ -352,70 +232,70 @@ xmlns="sap.m" xmlns:layout="sap.ui.layout">
                                         </content>
                                     </OverflowToolbar>
                                 </headerToolbar>
-                                <columns>
-                                    <Column width="auto" hAlign="Left" vAlign="Top" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">
-                                        <header>
+                                <ui:Columns>
+                                    <ui:Column width="auto" hAlign="Left" vAlign="Top" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">
+                                        
                                             <Text text="STATUS SAP" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
-                                        </header>
-                                        <footer/>
-                                    </Column>
-                                    <Column width="auto" hAlign="Left" vAlign="Top" minScreenWidth="Phone" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">
-                                        <header>
+                                        
+                                        
+                                    </ui:Column>
+                                    <ui:Column width="auto" hAlign="Left" vAlign="Top" minScreenWidth="Phone" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">
+                                        
                                             <Text text="SERIALNO 1" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
-                                        </header>
-                                        <footer/>
-                                    </Column>
-                                    <Column width="170px" hAlign="Left" vAlign="Top" minScreenWidth="Tablet" demandPopin="true" popinDisplay="WithoutHeader" mergeDuplicates="false">
-                                        <header>
+                                        
+                                        
+                                    </ui:Column>
+                                    <ui:Column width="170px" hAlign="Left" vAlign="Top" minScreenWidth="Tablet" demandPopin="true" popinDisplay="WithoutHeader" mergeDuplicates="false">
+                                        
                                             <Text text="Desc Med 1" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
-                                        </header>
-                                        <footer/>
-                                    </Column>
-                                    <Column width="auto" hAlign="Left" vAlign="Top" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">
-                                        <header>
+                                        
+                                        
+                                    </ui:Column>
+                                    <ui:Column width="auto" hAlign="Left" vAlign="Top" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">
+                                        
                                             <Text text="SERIALNO 2" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
-                                        </header>
-                                        <footer/>
-                                    </Column>
-                                    <Column width="auto" hAlign="Left" vAlign="Top" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">
-                                        <header>
+                                        
+                                        
+                                    </ui:Column>
+                                    <ui:Column width="auto" hAlign="Left" vAlign="Top" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">
+                                        
                                             <Text text="Desc Med 2" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
-                                        </header>
-                                        <footer/>
-                                    </Column>
-                                    <Column width="auto" hAlign="Left" vAlign="Top" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">
-                                        <header>
+                                        
+                                        
+                                    </ui:Column>
+                                    <ui:Column width="auto" hAlign="Left" vAlign="Top" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">
+                                        
                                             <Text text="Fecha" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
-                                        </header>
-                                        <footer/>
-                                    </Column>
-                                    <Column width="auto" hAlign="Left" vAlign="Top" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">
-                                        <header>
+                                        
+                                        
+                                    </ui:Column>
+                                    <ui:Column width="auto" hAlign="Left" vAlign="Top" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">
+                                        
                                             <Text text="Intervalo" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
-                                        </header>
-                                        <footer/>
-                                    </Column>
-                                    <Column width="auto" hAlign="Left" vAlign="Top" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Block" mergeDuplicates="false">
-                                        <header>
+                                        
+                                        
+                                    </ui:Column>
+                                    <ui:Column width="auto" hAlign="Left" vAlign="Top" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Block" mergeDuplicates="false">
+                                        
                                             <Text text="Med Ppal" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
-                                        </header>
-                                        <footer/>
-                                    </Column>
-                                    <Column width="auto" hAlign="Left" vAlign="Top" minScreenWidth="Desktop" demandPopin="false" popinDisplay="Inline" mergeDuplicates="false">
-                                        <header>
+                                        
+                                        
+                                    </ui:Column>
+                                    <ui:Column width="auto" hAlign="Left" vAlign="Top" minScreenWidth="Desktop" demandPopin="false" popinDisplay="Inline" mergeDuplicates="false">
+                                        
                                             <Text text="Med Respaldo" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
-                                        </header>
-                                        <footer/>
-                                    </Column>
-                                    <Column width="auto" hAlign="Left" vAlign="Top" minScreenWidth="Tablet" demandPopin="false" popinDisplay="Inline" mergeDuplicates="false">
-                                        <header>
+                                        
+                                        
+                                    </ui:Column>
+                                    <ui:Column width="auto" hAlign="Left" vAlign="Top" minScreenWidth="Tablet" demandPopin="false" popinDisplay="Inline" mergeDuplicates="false">
+                                        
                                             <Text text="Med Manual" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
-                                        </header>
-                                        <footer/>
-                                    </Column>
+                                        
+                                        
+                                    </ui:Column>
                                 </columns>
                                 <items>
-                                    <ColumnListItem type="Active">
+                                    <ui:ColumnListItem type="Active">
                                         <cells>
                                             <Text text="SI" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
                                             <Link text="23762348763956" textAlign="Begin" width="auto" target="_blank" wrapping="false" enabled="true" visible="true" emphasized="false" subtle="false"/>
@@ -433,7 +313,7 @@ xmlns="sap.m" xmlns:layout="sap.ui.layout">
                                             <Link text="-" textAlign="Begin" width="auto" target="_blank" wrapping="false" enabled="true" visible="true" emphasized="false" subtle="false"/>
                                         </cells>
                                     </ColumnListItem>
-                                    <ColumnListItem type="Active">
+                                    <ui:ColumnListItem type="Active">
                                         <cells>
                                             <Text text="NO" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
                                             <Link text="10437652876453" textAlign="Begin" width="auto" target="_blank" wrapping="false" enabled="true" visible="true" emphasized="false" subtle="false"/>
@@ -451,7 +331,7 @@ xmlns="sap.m" xmlns:layout="sap.ui.layout">
                                             <Link text="-" textAlign="Begin" width="auto" target="_blank" wrapping="false" enabled="true" visible="true" emphasized="false" subtle="false"/>
                                         </cells>
                                     </ColumnListItem>
-                                    <ColumnListItem type="Active">
+                                    <ui:ColumnListItem type="Active">
                                         <cells>
                                             <Text text="NO" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
                                             <Link text="56729183674567" textAlign="Begin" width="auto" target="_blank" wrapping="false" enabled="true" visible="true" emphasized="false" subtle="false"/>
@@ -474,7 +354,7 @@ xmlns="sap.m" xmlns:layout="sap.ui.layout">
                                         </cells>
                                     </ColumnListItem>
                                 </items>
-                            </Table>
+                            </Table> -->
                         </content>
                     </IconTabFilter>
                 </items>
@@ -485,7 +365,6 @@ xmlns="sap.m" xmlns:layout="sap.ui.layout">
             <OverflowToolbar width="100%" height="46px" design="Auto" enabled="true" visible="true">
                 <content>
                     <ToolbarSpacer width=""/>
-                    <Button text="Enviar" type="Default" iconFirst="true" width="auto" enabled="true" visible="true" iconDensityAware="false"/>
                 </content>
             </OverflowToolbar>
         </footer>

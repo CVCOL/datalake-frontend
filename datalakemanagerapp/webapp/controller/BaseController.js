@@ -20,7 +20,7 @@ sap.ui.define([
 
 	const cNumberDecimal = 5,
 		  cDefaultNumValue = "0.00000",
-		  cBaseurl = "http://localhost:8002/"; //"https://dev-polaris-api.egehaina.com/"; 
+		  cBaseurl = "https://dev-polaris-api.egehaina.com/"; //"http://localhost:8002/";
 
 	return Controller.extend("co.haina.datalakemanagerapp.controller.BaseController", {
 		/**
@@ -72,12 +72,16 @@ sap.ui.define([
 			}.bind(this));
 		},
 		apiLogin: function(){
+			//inicializar el modelo de Login
 			var loginInfo = {
 				user: this.getView().byId("user").getValue(),
-				password: this.getView().byId("password").getValue()
+				password: this.getView().byId("password").getValue(),
+				endpoint_backend: cBaseurl
 			};
 			var oLoginModel = new JSONModel(loginInfo);
+			this.getOwnerComponent().setModel(oLoginModel, "LoginModel");
 			this.setModel(oLoginModel, "LoginModel");
+
 			this.getToke("");
 			this.closeApiLogin();
 			MessageToast.show(this.getResourceBundle().getText("userLogin"));
@@ -85,13 +89,28 @@ sap.ui.define([
 		closeApiLogin: function () {
 			this.oDialog.close();
 		},
-		getToke: function(iBaseurl) {
-                
-			if( iBaseurl === "" ){
-				iBaseurl = cBaseurl;
+		getLoginModel: function(){
+			var oLoginModel = this.getOwnerComponent().getModel("LoginModel");			
+			
+			try{
+				oLoginModel = oLoginModel.getData();
+			}catch(error){
+				
 			}
-			var url = cBaseurl + 'token';			
-			var oLoginModel = this.getModel("LoginModel").getData();
+
+			this.setModel(oLoginModel, "LoginModel");
+
+			return oLoginModel;
+		},
+		getToke: function(iBaseurl) {
+            
+			var oLoginModel = this.getLoginModel();
+			
+			if( iBaseurl === "" ){
+				iBaseurl = oLoginModel.endpoint_backend;
+			}
+			var url = iBaseurl + 'token';			
+			
 
 			var token = $.ajax({
 				context: this,
@@ -106,12 +125,13 @@ sap.ui.define([
 					"password": oLoginModel.password,
 					"token": ""
 				},
-				success: function(result) { this.showResponseMessages(result) },
+				success: function(result) { },
 				error: function(e) { this.showResponseMessages(e) }
 			});						
 			if ( typeof token.responseJSON !== 'undefined' ) {
 				oLoginModel.token = token.responseJSON.access_token;
-				this.setModel(oLoginModel, "LoginModel");				
+				this.getOwnerComponent().setModel(oLoginModel, "LoginModel");
+				this.oLoginModel = oLoginModel;	
 			}else{
 				oLoginModel.token = ""
 			}
@@ -259,6 +279,53 @@ sap.ui.define([
 				return true;
 			}
 
+		},
+		/**
+		 * Mostrar mensajes de error
+		 * @public
+		 * @param {object} oParams Parametros del OData
+		 */
+		showGeneralError: function (oParams) {
+			oParams = jQuery.extend({
+				message: "",
+				additionalData: "",
+				oDataError: "",
+				title: "",
+				onClose: function () {}
+			}, oParams);
+			var sMessage = "",
+				sAditionalData = "";
+			if (oParams.message) {
+				sMessage = oParams.message;
+			} else {
+				sMessage = this.getResourceBundle().getText("technicalError");
+			}
+			if (oParams.additionalData) {
+				sAditionalData = oParams.additionalData;
+			}
+			if (oParams.oDataError) {
+				try {
+					var oResponse = jQuery.parseJSON(oParams.oDataError.responseText);
+					if (oResponse.error.code.indexOf("ZMC_SIM") >= 0) {
+						sMessage = oResponse.error.message.value;
+						sAditionalData = "";
+					} else {
+						sAditionalData = oResponse.error.message.value;
+					}
+				} catch (oException) {
+					sAditionalData = oParams.oDataError;
+				}
+			}
+			jQuery.sap.log.error(sMessage);
+			jQuery.sap.log.error(sAditionalData);
+			var sTitleBox = oParams.title ? oParams.title : this.getResourceBundle().getText("errorTitleMessageBox");
+			MessageBox.show(sMessage, {
+				icon: sap.m.MessageBox.Icon.ERROR,
+				title: sTitleBox,
+				onClose: oParams.onClose,
+				details: sAditionalData,
+				actions: sap.m.MessageBox.Action.CLOSE
+			});
 		},
 		/**
 		 * Exportar a CSV

@@ -34,30 +34,28 @@ sap.ui.define([
             onFileUpload: function(oEvent) {
                 var oFileUploader = oEvent.getSource();
                 var file = oEvent.getParameter("files")[0];
-                var token = "";
                 var form = new FormData();
           
                 form.append("file", file);
                 form.append("idFile", oFileUploader.getName() );
                 form.append("User", 'polarissrv' );
        
-                token = this.getToke();			
-                
-                var settings = {
-                                "url": this.baseurl+"uploadfile",
-                                "method": "POST",
-                                "timeout": 0,
-                                "headers": {								
-                                    "Authorization": "Bearer "+token
-                                },
-                                "processData": false,
-                                "contentType": false,
-                                "data": form,
-                                success: function(result) { },
-                                error: function(e) { console.log(e.message); }
-                                };
-        
-                $.ajax(settings);
+                var oLoginModel = this.getLoginModel();		
+                var url = oLoginModel.endpoint_backend+"uploadmanualreading";
+
+                var settings = $.ajax({
+                    context: this,
+                    url: url,
+                    async: false,
+                    method: 'POST',
+                    timeout: 0,
+                    headers: { "Authorization": "Bearer "+oLoginModel.token },
+                    processData: false,
+                    contentType: false,
+                    data: form,                       
+                    success: function(result) { },
+                    error: function(e) { this.showResponseMessages(e) }
+                });
     
             }
             

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="1.0"
+    xmlns:edmx="http://schemas.microsoft.com/ado/2007/06/edmx"
+    xmlns:m="http://schemas.microsoft.com/ado/2007/08/dataservices/metadata"
+    xmlns:sap="http://www.sap.com/Protocols/SAPData">
+    <edmx:DataServices m:DataServiceVersion="2.0">
+        <Schema Namespace="ZAPI_ISU_DATALAKE_SRV" xml:lang="es" sap:schema-version="1"
+            xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
+            <Annotation Term="Core.SchemaVersion" String="1.0.0"
+                xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+                <EntityType Name="ProfilesValueRelated" sap:content-version="1">
+                    <Key>
+                        <PropertyRef Name="Profile"/>
+                        <PropertyRef Name="Timestamp"/>
+                        <PropertyRef Name="OutputInterval"/>
+                    </Key>
+                    <Property Name="Profile" Type="Edm.String" Nullable="false" MaxLength="18" sap:unicode="false" sap:creatable="false" sap:updatable="false" sap:sortable="false"/>
+                    <Property Name="Timestamp" Type="Edm.DateTime" Nullable="false" Precision="0" sap:unicode="false" sap:label="Cronomarcador" sap:creatable="false" sap:updatable="false" sap:sortable="false"/>
+                    <Property Name="OutputInterval" Type="Edm.String" Nullable="false" MaxLength="4" sap:unicode="false" sap:creatable="false" sap:updatable="false" sap:sortable="false"/>
+                    <Property Name="ProfileText" Type="Edm.String" Nullable="false" MaxLength="60" sap:unicode="false" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                    <Property Name="Sparte" Type="Edm.String" Nullable="false" MaxLength="2" sap:unicode="false" sap:label="División" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                    <Property Name="ValueStatus" Type="Edm.String" Nullable="false" MaxLength="5" sap:unicode="false" sap:label="Status sistema" sap:creatable="false" sap:updatable="false" sap:sortable="false"/>
+                    <Property Name="ProfDate" Type="Edm.DateTime" Precision="7" sap:unicode="false" sap:label="Fecha desde" sap:creatable="false" sap:updatable="false" sap:sortable="false"/>
+                    <Property Name="ProfDateTo" Type="Edm.DateTime" Precision="7" sap:unicode="false" sap:label="Fecha Hasta" sap:creatable="false" sap:updatable="false" sap:sortable="false"/>
+                    <Property Name="ContractID" Type="Edm.String" Nullable="false" MaxLength="10" sap:unicode="false" sap:creatable="false" sap:updatable="false" sap:sortable="false"/>
+                    <Property Name="ProfTime" Type="Edm.Time" Precision="6" sap:unicode="false" sap:label="Tiempo interv. desde" sap:creatable="false" sap:updatable="false" sap:sortable="false"/>
+                    <Property Name="ProfTimeTo" Type="Edm.Time" Precision="6" sap:unicode="false" sap:label="Tiempo interv. hasta" sap:creatable="false" sap:updatable="false" sap:sortable="false"/>
+                    <Property Name="DeviceID" Type="Edm.String" Nullable="false" MaxLength="18" sap:unicode="false" sap:creatable="false" sap:updatable="false" sap:sortable="false"/>
+                    <Property Name="RegisterID" Type="Edm.String" Nullable="false" MaxLength="3" sap:unicode="false" sap:creatable="false" sap:updatable="false" sap:sortable="false"/>
+                    <Property Name="ProfileTypeID" Type="Edm.String" Nullable="false" MaxLength="2" sap:unicode="false" sap:creatable="false" sap:updatable="false" sap:sortable="false"/>
+                    <Property Name="ProfileValueTypeID" Type="Edm.String" Nullable="false" MaxLength="1" sap:unicode="false" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                    <Property Name="UnitOfMeasure" Type="Edm.String" Nullable="false" MaxLength="3" sap:unicode="false" sap:creatable="false" sap:updatable="false" sap:sortable="false"/>
+                    <Property Name="Currency" Type="Edm.String" Nullable="false" MaxLength="5" sap:unicode="false" sap:creatable="false" sap:updatable="false" sap:sortable="false"/>
+                    <Property Name="TimeZone" Type="Edm.String" Nullable="false" MaxLength="10" sap:unicode="false" sap:label="Time Zone" sap:creatable="false" sap:updatable="false" sap:sortable="false"/>
+                    <Property Name="Value" Type="Edm.Decimal" Nullable="false" Precision="31" Scale="14" sap:unicode="false" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                </EntityType>
+                <EntityContainer Name="ZAPI_ISU_DATALAKE_SRV_Entities" m:IsDefaultEntityContainer="true" sap:supported-formats="atom json xlsx">
+                    <EntitySet Name="ProfilesValueRelatedSet" EntityType="ZAPI_ISU_DATALAKE_SRV.ProfilesValueRelated" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:pageable="false" sap:addressable="false" sap:content-version="1"/>
+                </EntityContainer>
+                <atom:link rel="self" href="https://vheghds4ci.us1.sap.egehaina.com:44300/sap/opu/odata/sap/ZAPI_ISU_DATALAKE_SRV/$metadata"
+                    xmlns:atom="http://www.w3.org/2005/Atom"/>
+                    <atom:link rel="latest-version" href="https://vheghds4ci.us1.sap.egehaina.com:44300/sap/opu/odata/sap/ZAPI_ISU_DATALAKE_SRV/$metadata"
+                        xmlns:atom="http://www.w3.org/2005/Atom"/>
+                    </Schema>
+                </edmx:DataServices>
+            </edmx:Edmx>

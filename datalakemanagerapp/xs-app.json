@@ -3,10 +3,17 @@
   "authenticationMethod": "route",
   "routes": [
     {
-      "source": "^/SAP/(.*)$",
-      "target": "/SAP/$1",
+      "source": "^/sap/(.*)$",
+      "target": "/sap/$1",
       "destination": "DS4_DATALAKE",
-      "authenticationType": "none",
+      "authenticationType": "xsuaa",
+      "csrfProtection": false
+    },
+    {
+      "source": "^/sap/(.*)$",
+      "target": "/sap/$1",
+      "destination": "sap_process_automation_site",
+      "authenticationType": "xsuaa",
       "csrfProtection": false
     },
     {

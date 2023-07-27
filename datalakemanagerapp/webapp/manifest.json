@@ -5,7 +5,7 @@
     "type": "application",
     "i18n": "i18n/i18n.properties",
     "applicationVersion": {
-      "version": "0.0.1"
+      "version": "0.0.6"
     },
     "title": "{{appTitle}}",
     "description": "{{appDescription}}",
@@ -14,6 +14,38 @@
       "id": "@sap/generator-fiori:basic",
       "version": "1.9.6",
       "toolsId": "63408a4e-0c14-45f8-97c0-9f1c3b47992c"
+    },
+    "dataSources": {
+      "ZAPI_ISU_DATALAKE_SRV": {
+        "uri": "/sap/opu/odata/sap/ZAPI_ISU_DATALAKE_SRV",
+        "type": "OData",
+        "settings": {
+          "odataVersion": "2.0",
+          "localUri": "localService/metadata.xml"
+        }
+      },
+      "annotation": {
+        "type": "ODataAnnotation",
+        "uri": "annotations/annotation.xml",
+        "settings": {
+          "localUri": "annotations/annotation.xml"
+        }
+      }
+    },
+    "crossNavigation": {
+      "inbounds": {
+        "co-haina-datalakemanagerapp-inbound": {
+          "signature": {
+            "parameters": {},
+            "additionalParameters": "allowed"
+          },
+          "semanticObject": "datalakemanagermta",
+          "action": "mainitial",
+          "title": "{{flpTitle}}",
+          "subTitle": "{{flpSubtitle}}",
+          "icon": ""
+        }
+      }
     }
   },
   "sap.ui": {
@@ -57,6 +89,20 @@
         "settings": {
           "bundleName": "co.haina.datalakemanagerapp.i18n.i18n"
         }
+      },
+      
+      "LoginModel": {
+        "type": "sap.ui.model.json.JSONModel"
+      },
+      "ProfileValuesModel": {
+        "dataSource": "ZAPI_ISU_DATALAKE_SRV",
+        "preload": true,
+        "type": "sap.ui.model.odata.v2.ODataModel",
+        "settings": {
+          "defaultBindingMode": "TwoWay",
+          "defaultCountMode": "Inline",
+          "refreshAfterChange": false
+        }
       }
     },
     "resources": {
@@ -84,36 +130,36 @@
             "Targetadmindashboard"
           ]
         },
-        { 
+        {
           "name": "home",
-					"pattern": "",
-					"target": "parentTarget"
-				},
+          "pattern": "",
+          "target": "parentTarget"
+        },
         {
-          "name":"rtMonitor",
-					"pattern": "rtMonitor",
-					"target": "TargetrtMonitor"
-				},
+          "name": "rtMonitor",
+          "pattern": "rtMonitor",
+          "target": "TargetrtMonitor"
+        },
         {
-          "name":"rtLogapp",
-					"pattern": "rtLogapp",
-					"target": "TargetrtLogapp"
-				},
+          "name": "rtLogapp",
+          "pattern": "rtLogapp",
+          "target": "TargetrtLogapp"
+        },
         {
-          "name":"rtLogupload",
-					"pattern": "rtLogupload",
-					"target": "TargetrtLogupload"
-				},
+          "name": "rtLogupload",
+          "pattern": "rtLogupload",
+          "target": "TargetrtLogupload"
+        },
         {
-          "name":"rtUploadsource",
-					"pattern": "rtUploadsource",
-					"target": "TargetrtUploadsource"
-				},
+          "name": "rtUploadsource",
+          "pattern": "rtUploadsource",
+          "target": "TargetrtUploadsource"
+        },
         {
-          "name":"rtUploadreadings",
-					"pattern": "rtUploadreadings",
-					"target": "TargetrtUploadreadings"
-				}
+          "name": "rtUploadreadings",
+          "pattern": "rtUploadreadings",
+          "target": "TargetrtUploadreadings"
+        }
       ],
       "targets": {
         "Targetadmindashboard": {
@@ -124,55 +170,55 @@
           "viewName": "admindashboard"
         },
         "TargetrtMonitor": {
-					"viewId": "readingMonitor",
+          "viewId": "readingMonitor",
           "viewPath": "co.haina.datalakemanagerapp.view",
-					"viewName": "readingMonitor",
+          "viewName": "readingMonitor",
           "viewType": "XML",
-					"parent": "Targetadmindashboard",
-					"controlId": "parentNavContainer",
-					"controlAggregation": "pages",
-					"transition": "slide"
-				},
+          "parent": "Targetadmindashboard",
+          "controlId": "parentNavContainer",
+          "controlAggregation": "pages",
+          "transition": "slide"
+        },
         "TargetrtLogapp": {
-					"viewId": "applicationlog",
+          "viewId": "applicationlog",
           "viewPath": "co.haina.datalakemanagerapp.view",
-					"viewName": "applicationlog",
+          "viewName": "applicationlog",
           "viewType": "XML",
-					"parent": "Targetadmindashboard",
-					"controlId": "parentNavContainer",
-					"controlAggregation": "pages",
-					"transition": "slide"
-				},
+          "parent": "Targetadmindashboard",
+          "controlId": "parentNavContainer",
+          "controlAggregation": "pages",
+          "transition": "slide"
+        },
         "TargetrtUploadsource": {
-					"viewId": "uploadData",
+          "viewId": "uploadData",
           "viewPath": "co.haina.datalakemanagerapp.view",
-					"viewName": "uploadData",
+          "viewName": "uploadData",
           "viewType": "XML",
-					"parent": "Targetadmindashboard",
-					"controlId": "parentNavContainer",
-					"controlAggregation": "pages",
-					"transition": "slide"
-				},
+          "parent": "Targetadmindashboard",
+          "controlId": "parentNavContainer",
+          "controlAggregation": "pages",
+          "transition": "slide"
+        },
         "TargetrtUploadreadings": {
-					"viewId": "uploadReading",
+          "viewId": "uploadReading",
           "viewPath": "co.haina.datalakemanagerapp.view",
-					"viewName": "uploadReading",
+          "viewName": "uploadReading",
           "viewType": "XML",
-					"parent": "Targetadmindashboard",
-					"controlId": "parentNavContainer",
-					"controlAggregation": "pages",
-					"transition": "slide"
-				},
+          "parent": "Targetadmindashboard",
+          "controlId": "parentNavContainer",
+          "controlAggregation": "pages",
+          "transition": "slide"
+        },
         "TargetrtLogupload": {
-					"viewId": "uploadlog",
+          "viewId": "uploadlog",
           "viewPath": "co.haina.datalakemanagerapp.view",
-					"viewName": "uploadlog",
+          "viewName": "uploadlog",
           "viewType": "XML",
-					"parent": "Targetadmindashboard",
-					"controlId": "parentNavContainer",
-					"controlAggregation": "pages",
-					"transition": "slide"
-				}
+          "parent": "Targetadmindashboard",
+          "controlId": "parentNavContainer",
+          "controlAggregation": "pages",
+          "transition": "slide"
+        }
       }
     },
     "rootView": {
@@ -181,5 +227,13 @@
       "async": true,
       "id": "App"
     }
+  },
+  "sap.fiori": {
+    "registrationIds": [],
+    "archeType": "transactional"
+  },
+  "sap.cloud": {
+    "public": true,
+    "service": "datalakemanagermta"
   }
 }

@@ -33,8 +33,7 @@ sap.ui.define([
             },
             onFileUpload: function(oEvent) {
                 var oFileUploader = oEvent.getSource();
-                var file = oEvent.getParameter("files")[0];
-                var token = "";                
+                var file = oEvent.getParameter("files")[0];              
                 var form = new FormData();
           
                 form.append("file", file);
@@ -42,24 +41,22 @@ sap.ui.define([
                 form.append("User", 'polarissrv' );
                 form.append("FilePeriod", this.byId("FilePeriod").getValue() );
 
-                token = this.getToke();			
-                
-                var settings = {
-                                "url": this.baseurl+"uploadfile",
-                                "method": "POST",
-                                "timeout": 0,
-                                "headers": {								
-                                    "Authorization": "Bearer "+token
-                                },
-                                "processData": false,
-                                "contentType": false,
-                                "data": form,
-                                success: function(result) { },
-                                error: function(e) { console.log(e.message); }
-                                };
-        
-                $.ajax(settings);
-    
+                var oLoginModel = this.getLoginModel();
+                var url = oLoginModel.endpoint_backend+"uploadfile";
+
+                var settings = $.ajax({
+                    context: this,
+                    url: url,
+                    async: false,
+                    method: 'POST',
+                    timeout: 0,
+                    headers: { "Authorization": "Bearer "+oLoginModel.token },
+                    processData: false,
+                    contentType: false,
+                    data: form,                       
+                    success: function(result) { },
+                    error: function(e) { this.showResponseMessages(e) }
+                });
             }
         });
     

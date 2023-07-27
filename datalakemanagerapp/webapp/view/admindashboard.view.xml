@@ -2,13 +2,17 @@
     xmlns:mvc="sap.ui.core.mvc" displayBlock="true"
     xmlns="sap.m"
     xmlns:tnt="sap.tnt" height="100%" class="side-navigation-demo">
-    <Button id="_IDGenButton1" text="Toggle Collapse/Expand" icon="sap-icon://menu2" press=".onCollapseExpandPress" />
     <tnt:ToolPage id="toolPage">
-        <tnt:sideContent>                        
+        <tnt:header>
+            <tnt:ToolHeader>
+                <Button id="btnCollapse" icon="sap-icon://menu2" press=".onCollapseExpandPress" />
+            </tnt:ToolHeader>
+        </tnt:header>
+        <tnt:sideContent>
             <tnt:SideNavigation id="sideNavigation" itemSelect="onItemSelect">
                 <tnt:NavigationList id="_IDGenNavigationList1">
-                    <tnt:NavigationListItem id="_IDGenNavigationListItem11"  text="{i18n>Monitor}" icon="sap-icon://sys-monitor">
-                        <tnt:NavigationListItem id="_IDGenNavigationListItem12"  text="{i18n>MonitorReading}" key="rtMonitor" />                        
+                    <tnt:NavigationListItem id="_IDGenNavigationListItem11" text="{i18n>Monitor}" icon="sap-icon://sys-monitor">
+                        <tnt:NavigationListItem id="_IDGenNavigationListItem12" text="{i18n>MonitorReading}" key="rtMonitor" />
                     </tnt:NavigationListItem>
                     <tnt:NavigationListItem id="_IDGenNavigationListItem1" text="{i18n>upload}" icon="sap-icon://add-document">
                         <tnt:NavigationListItem id="_IDGenNavigationListItem2" text="{i18n>uploadsource}" key="rtUploadsource" />
@@ -33,8 +37,9 @@
                 </tnt:fixedItem>
             </tnt:SideNavigation>
         </tnt:sideContent>
-        <tnt:mainContents>
-            <App id="parentNavContainer"/>
+        <tnt:mainContents >
+            <NavContainer id="parentNavContainer"/>
         </tnt:mainContents>
     </tnt:ToolPage>
+
 </mvc:View>

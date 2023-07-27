@@ -47,10 +47,10 @@ sap.ui.define([
                     router.navTo(sKey, params);
             },
             onCollapseExpandPress: function () {
-                var oSideNavigation = this.byId("sideNavigation");
-                var bExpanded = oSideNavigation.getExpanded();
-    
-                oSideNavigation.setExpanded(!bExpanded);
+                var oToolPage = this.byId("toolPage");
+                var bSideExpanded = oToolPage.getSideExpanded();                
+
+                oToolPage.setSideExpanded(!oToolPage.getSideExpanded());
             },
     
             onHideShowSubItemPress: function () {
