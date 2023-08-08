@@ -1,9 +1,10 @@
 <mvc:View xmlns:mvc="sap.ui.core.mvc" controllerName="co.haina.datalakemanagerapp.controller.readingMonitor"
     xmlns="sap.m"
+    xmlns:jsed="sap.ui.integration.widgets"
     xmlns:layout="sap.ui.layout"
     xmlns:ui="sap.ui.table">
-    <Page showHeader="true" title="{i18n>MonitorReading}" showFooter="true" showNavButton="false">
-        <content>            
+    <Page showHeader="true" title="{i18n>MonitorReading}" showFooter="true" showNavButton="false" busy="{viewModel>busy}" >
+        <content>
             <IconTabBar expandable="false" expanded="true" applyContentPadding="false" backgroundDesign="Solid" upperCase="false" visible="true" selectedKey="Ok">
                 <items>
                     <IconTabFilter icon="sap-icon://complete" iconColor="Default" text="Completas" count="{/CompleteProfileValuesCount}" design="Vertical" showAll="false" textDirection="Inherit" enabled="true" visible="true" iconDensityAware="false">
@@ -29,7 +30,7 @@
                                                                 'pattern': 'yyyy-MM-dd'
                                                             }
                                                         }" class="sapUiSmallMarginBottom"/>
-                                            
+
                                             <Input id="inpProfile" type="Text" value="000000000000100005" />
                                             <Button icon="sap-icon://search" id="btnSearch" text="{i18n>search}" press="_getCompleteProfileValues" />
                                             <Text text="Items ({/CompleteProfileValuesCount})" width="auto" maxLines="1" wrapping="false" textAlign="End" textDirection="Inherit" visible="true"/>
@@ -117,7 +118,7 @@
                             </ui:Table>
                         </content>
                     </IconTabFilter>
-                    <IconTabFilter icon="sap-icon://error" iconColor="Default" text="Faltantes" count="{/MissingProfileValuesCount}" design="Vertical" showAll="false" textDirection="Inherit" enabled="true" visible="true" iconDensityAware="false">
+                    <IconTabFilter icon="sap-icon://error" iconColor="Default" text="{i18n>MissingProfileValues}" count="{/MissingProfileValuesCount}" design="Vertical" showAll="false" textDirection="Inherit" enabled="true" visible="true" iconDensityAware="false">
                         <content>
                             <ui:Table id="tblMissing" width="auto" noDataText="{i18n>noData}" mode="None" showSeparators="All" growing="true" growingThreshold="20" growingScrollToLoad="true" class="sapUiResponsiveMargin">
                                 <ui:extension>
@@ -139,83 +140,45 @@
                                                                 'pattern': 'yyyy-MM-dd'
                                                             }
                                                         }" class="sapUiSmallMarginBottom"/>
+                                            <Label text="{i18n>serialNo}" labelFor="inpSerialNo"/>
+                                            <Input id="inpSerialNo" type="Text" width="20%" />                                    
                                             <Button icon="sap-icon://search" text="{i18n>search}" press="_getMissingReading" />
                                         </content>
                                     </OverflowToolbar>
                                 </ui:extension>
-                                 <!-- <ui:columns>
-                                   <ui:Column width="auto" hAlign="Left" vAlign="Top" minScreenWidth="Phone" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">
-
-                                        <Text text="SERIALNO 1" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
-                                    </ui:Column>
-                                    <ui:Column width="170px" hAlign="Left" vAlign="Top" minScreenWidth="Tablet" demandPopin="true" popinDisplay="WithoutHeader" mergeDuplicates="false">
-
-                                        <Text text="Desc Med 1" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
-
-
-                                    </ui:Column>
-                                    <ui:Column width="auto" hAlign="Left" vAlign="Top" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">
-
-                                        <Text text="SERIALNO 2" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
-
-
-                                    </ui:Column>
-                                    <ui:Column width="auto" hAlign="Left" vAlign="Top" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">
-
-                                        <Text text="Desc Med 2" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
-
-
-                                    </ui:Column>
-                                    <ui:Column width="80px" hAlign="Left" vAlign="Top" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">
-
-                                        <Text text="Fecha" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
-
-
-                                    </ui:Column>
-                                    <ui:Column width="80px" hAlign="Left" vAlign="Top" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">
-
-                                        <Text text="Intervalo" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
-
-
-                                    </ui:Column>
-                                    <ui:Column width="85px" hAlign="Left" vAlign="Top" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Block" mergeDuplicates="false">
-
-                                        <Text text="Med Ppal" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
-
-
-                                    </ui:Column>
-                                    <ui:Column width="85px" hAlign="Left" vAlign="Top" minScreenWidth="Desktop" demandPopin="false" popinDisplay="Inline" mergeDuplicates="false">
-
-                                        <Text text="Med Respaldo" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
-
-
-                                    </ui:Column>
-                                    <ui:Column width="auto" hAlign="Left" vAlign="Top" minScreenWidth="Tablet" demandPopin="false" popinDisplay="Inline" mergeDuplicates="false">
-
-                                        <Text text="Med Manual" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
-
-
-                                    </ui:Column>
-                                    <ui:Column width="150px" hAlign="Left" vAlign="Top" minScreenWidth="Desktop" demandPopin="false" popinDisplay="Inline" mergeDuplicates="false">
-
-                                        <Text text="Motivo" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
-
-
-                                    </ui:Column>
-                                    <ui:Column width="auto" hAlign="Left" vAlign="Top" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">
-
-                                        <Text text="Observación" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
-
-
-                                    </ui:Column>
-                                </ui:columns> -->
                             </ui:Table>
                         </content>
                     </IconTabFilter>
-                    <IconTabFilter icon="sap-icon://direction-arrows" iconColor="Critical" text="Inconsistentes" count="3" design="Vertical" showAll="false" textDirection="Inherit" enabled="true" visible="true" iconDensityAware="false">
+                    <IconTabFilter icon="sap-icon://direction-arrows" iconColor="Critical" text="{i18n>InconsistentProfileValues}" count="{/InconsistentProfileValuesCount}" design="Vertical" showAll="false" textDirection="Inherit" enabled="true" visible="true" iconDensityAware="false">
                         <content>
-                            <Text text="" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
-                            <!-- <Table  id=tblInconsitency" width="auto" noDataText="No data" mode="None" showSeparators="All" growing="true" growingThreshold="20" growingScrollToLoad="true" class="sapUiResponsiveMargin">
+                            <ui:Table id="tblInconsistent" width="auto" noDataText="{i18n>noData}" mode="None" showSeparators="All" growing="true" growingThreshold="20" growingScrollToLoad="true" class="sapUiResponsiveMargin">
+                                <ui:extension>
+                                    <OverflowToolbar width="auto" height="auto" design="Transparent" visible="true" enabled="true">
+                                        <content>
+                                            <Label text="{i18n>dateFrom}" labelFor="dtFromM"/>
+                                            <DatePicker id="dtFromI" width="20%" value="{
+                                                            'path':'viewModel>/valueDateFromI',
+                                                            'type':'sap.ui.model.type.Date',
+                                                            'formatOptions': {
+                                                                'pattern': 'yyyy-MM-dd'
+                                                            }
+                                                        }" class="sapUiSmallMarginBottom"/>
+                                            <Label text="{i18n>dateTo}" labelFor="dtFromM"/>
+                                            <DatePicker id="dtToI" width="20%" value="{
+                                                            'path':'viewModel>/valueDateToI',
+                                                            'type':'sap.ui.model.type.Date',
+                                                            'formatOptions': {
+                                                                'pattern': 'yyyy-MM-dd'
+                                                            }
+                                                        }" class="sapUiSmallMarginBottom"/>
+                                            <Button icon="sap-icon://search" text="{i18n>search}" press="_getInconsistentReading" />
+                                        </content>
+                                    </OverflowToolbar>
+                                </ui:extension>
+                            </ui:Table>
+                        </content>
+                    </IconTabFilter>
+                    <!-- <Table id=tblInconsitency" width="auto" noDataText="No data" mode="None" showSeparators="All" growing="true" growingThreshold="20" growingScrollToLoad="true" class="sapUiResponsiveMargin">
                                 <infoToolbar/>
                                 <headerToolbar>
                                     <OverflowToolbar width="auto" height="auto" design="Transparent" visible="true" enabled="true">
@@ -294,69 +257,8 @@
                                         
                                     </ui:Column>
                                 </columns>
-                                <items>
-                                    <ui:ColumnListItem type="Active">
-                                        <cells>
-                                            <Text text="SI" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
-                                            <Link text="23762348763956" textAlign="Begin" width="auto" target="_blank" wrapping="false" enabled="true" visible="true" emphasized="false" subtle="false"/>
-                                            <Text text="AK_012 Revoked" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
-                                            <layout:HorizontalLayout>
-                                                <layout:content/>
-                                            </layout:HorizontalLayout>
-                                            <layout:HorizontalLayout>
-                                                <layout:content/>
-                                            </layout:HorizontalLayout>
-                                            <Text text="01.06.2023" width="91.94048309326172px" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
-                                            <Text text="21:15:00" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
-                                            <Text text="101,56" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
-                                            <Text text="43,54" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
-                                            <Link text="-" textAlign="Begin" width="auto" target="_blank" wrapping="false" enabled="true" visible="true" emphasized="false" subtle="false"/>
-                                        </cells>
-                                    </ColumnListItem>
-                                    <ui:ColumnListItem type="Active">
-                                        <cells>
-                                            <Text text="NO" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
-                                            <Link text="10437652876453" textAlign="Begin" width="auto" target="_blank" wrapping="false" enabled="true" visible="true" emphasized="false" subtle="false"/>
-                                            <Text text="Regular Check" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
-                                            <layout:HorizontalLayout>
-                                                <layout:content/>
-                                            </layout:HorizontalLayout>
-                                            <layout:HorizontalLayout>
-                                                <layout:content/>
-                                            </layout:HorizontalLayout>
-                                            <Text text="01.06.2023" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
-                                            <Text text="09:30:00" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
-                                            <Text text="0" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
-                                            <Text text="15" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
-                                            <Link text="-" textAlign="Begin" width="auto" target="_blank" wrapping="false" enabled="true" visible="true" emphasized="false" subtle="false"/>
-                                        </cells>
-                                    </ColumnListItem>
-                                    <ui:ColumnListItem type="Active">
-                                        <cells>
-                                            <Text text="NO" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
-                                            <Link text="56729183674567" textAlign="Begin" width="auto" target="_blank" wrapping="false" enabled="true" visible="true" emphasized="false" subtle="false"/>
-                                            <Text text="Regular returns of material" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
-                                            <layout:HorizontalLayout>
-                                                <layout:content/>
-                                            </layout:HorizontalLayout>
-                                            <layout:HorizontalLayout>
-                                                <layout:content/>
-                                            </layout:HorizontalLayout>
-                                            <layout:HorizontalLayout>
-                                                <layout:content/>
-                                            </layout:HorizontalLayout>
-                                            <layout:HorizontalLayout>
-                                                <layout:content/>
-                                            </layout:HorizontalLayout>
-                                            <Text text="63" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
-                                            <Text text="0" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
-                                            <Link text="-" textAlign="Begin" width="auto" target="_blank" wrapping="false" enabled="true" visible="true" emphasized="false" subtle="false"/>
-                                        </cells>
-                                    </ColumnListItem>
-                                </items>
+                               
                             </Table> -->
-                        </content>
-                    </IconTabFilter>
                 </items>
                 <content/>
             </IconTabBar>

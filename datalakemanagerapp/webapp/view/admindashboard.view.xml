@@ -1,7 +1,7 @@
 <mvc:View controllerName="co.haina.datalakemanagerapp.controller.admindashboard"
     xmlns:mvc="sap.ui.core.mvc" displayBlock="true"
     xmlns="sap.m"
-    xmlns:tnt="sap.tnt" height="100%" class="side-navigation-demo">
+    xmlns:tnt="sap.tnt" height="100%" class="side-navigation-demo" busy="{viewModel>busy}">
     <tnt:ToolPage id="toolPage">
         <tnt:header>
             <tnt:ToolHeader>

@@ -20,7 +20,7 @@ sap.ui.define([
 
 	const cNumberDecimal = 5,
 		  cDefaultNumValue = "0.00000",
-		  cBaseurl = "https://dev-polaris-api.egehaina.com/"; //"http://localhost:8002/";
+		  cBaseurl = "http://localhost:8002/"; //"https://dev-polaris-api.egehaina.com/";
 
 	return Controller.extend("co.haina.datalakemanagerapp.controller.BaseController", {
 		/**
@@ -73,6 +73,7 @@ sap.ui.define([
 		},
 		apiLogin: function(){
 			//inicializar el modelo de Login
+			this.getView().setBusy(true);
 			var loginInfo = {
 				user: this.getView().byId("user").getValue(),
 				password: this.getView().byId("password").getValue(),
@@ -84,6 +85,7 @@ sap.ui.define([
 
 			this.getToke("");
 			this.closeApiLogin();
+			this.getView().setBusy(false);
 			MessageToast.show(this.getResourceBundle().getText("userLogin"));
 		},
 		closeApiLogin: function () {

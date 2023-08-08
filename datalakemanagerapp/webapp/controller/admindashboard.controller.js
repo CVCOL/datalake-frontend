@@ -1,14 +1,20 @@
 sap.ui.define([
-    "./BaseController"
+    "./BaseController",
+    "sap/ui/model/json/JSONModel",
 ],
     /**
      * @param {typeof sap.ui.core.mvc.Controller} Controller
      */
-    function (Controller) {
+    function (Controller, JSONModel) {
         "use strict";
 
         return Controller.extend("co.haina.datalakemanagerapp.controller.admindashboard", {
             onInit: function () {
+                var oModel = new JSONModel({
+                    busy: true
+                });
+                this.setModel(oModel, "viewModel");	
+
                 this.registerMessageManager();
                 this.openApiLogin();
 
