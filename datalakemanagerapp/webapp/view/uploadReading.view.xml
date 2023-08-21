@@ -7,6 +7,14 @@
 			<m:VBox id="_IDGenVBox1">
 				<m:Panel id="_IDGenPanel1" headerText="Lecturas Manuales">
 					<u:FileUploader id="LecturasManuales" name="LecturasManuales" buttonText="{i18n>uploadFileReadings}" icon="sap-icon://sys-prev-page" tooltip="{i18n>uploadFileReadings}" uploadComplete="onFileUploadComplete" change="onFileUpload" sameFilenameAllowed="true"/>
+					<m:VBox class="sapUiSmallMargin">
+						<m:Label text="{i18n>contingencyType}" labelFor="grpContingencia" />
+						<m:RadioButtonGroup id="grpContingencia">
+							<m:RadioButton text="Faltantes/Inconsitentes" id="FI" selected="true" />
+							<m:RadioButton text="Contingencia, remplazo lecturas" id="CTRL"  />
+							<m:RadioButton text="EDENORTE" id="EDENORTE" />
+						</m:RadioButtonGroup>
+					</m:VBox>
 				</m:Panel>
 			</m:VBox>
 		</m:content>

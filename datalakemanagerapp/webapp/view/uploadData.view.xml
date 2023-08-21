@@ -22,7 +22,7 @@
 
 				<m:Panel id="_IDGenPanel2" headerText="SAGC (Suite de Aplicaciones de la Gerencia Comercial)">
 					<m:Label text="{i18n>period}: " labelFor="FilePeriod" id="lblPeriod" />
-					<m:DatePicker
+					<m:DatePicker valueState="None"
 					id="FilePeriod"
 					width="15%"
 					value="{

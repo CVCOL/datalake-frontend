@@ -35,7 +35,15 @@ sap.ui.define([
                 var oFileUploader = oEvent.getSource();
                 var file = oEvent.getParameter("files")[0];              
                 var form = new FormData();
-          
+                
+                if ( ( oFileUploader.getName() == "Derechoconexionunitario" || 
+                       oFileUploader.getName() == "Derechoconexionunitario" ||
+                       oFileUploader.getName() == "Derechoconexionunitario" ) 
+                    && ( this.byId("FilePeriod").getValue() == "" ) ) {
+                    this.byId("FilePeriod").setValueState("Error");
+                    return;
+                }else{ this.byId("FilePeriod").setValueState("None"); }
+
                 form.append("file", file);
                 form.append("idFile", oFileUploader.getName() );
                 form.append("User", 'polarissrv' );

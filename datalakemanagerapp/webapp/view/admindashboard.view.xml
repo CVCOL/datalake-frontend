@@ -1,8 +1,8 @@
 <mvc:View controllerName="co.haina.datalakemanagerapp.controller.admindashboard"
     xmlns:mvc="sap.ui.core.mvc" displayBlock="true"
     xmlns="sap.m"
-    xmlns:tnt="sap.tnt" height="100%" class="side-navigation-demo" busy="{viewModel>busy}">
-    <tnt:ToolPage id="toolPage">
+    xmlns:tnt="sap.tnt" height="100%" class="side-navigation-demo">
+    <tnt:ToolPage id="toolPage" busy="{viewModel>/busy}" >
         <tnt:header>
             <tnt:ToolHeader>
                 <Button id="btnCollapse" icon="sap-icon://menu2" press=".onCollapseExpandPress" />
@@ -19,6 +19,7 @@
                         <tnt:NavigationListItem id="_IDGenNavigationListItem3" text="{i18n>uploadreadings}" key="rtUploadreadings" />
                     </tnt:NavigationListItem>
                     <tnt:NavigationListItem id="_IDGenNavigationListItem4" text="{i18n>log}" icon="sap-icon://it-host">
+                        <tnt:NavigationListItem text="{i18n>logread}" id="logread" key="rtlogread" />
                         <tnt:NavigationListItem text="{i18n>logapp}" id="logapp" key="rtLogapp" />
                         <tnt:NavigationListItem text="{i18n>logupload}" id="logupload" key="rtLogupload" />
                     </tnt:NavigationListItem>

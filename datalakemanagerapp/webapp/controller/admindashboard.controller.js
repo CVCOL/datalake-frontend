@@ -10,14 +10,9 @@ sap.ui.define([
 
         return Controller.extend("co.haina.datalakemanagerapp.controller.admindashboard", {
             onInit: function () {
-                var oModel = new JSONModel({
-                    busy: true
-                });
-                this.setModel(oModel, "viewModel");	
-
+                this.setViewBusy(false);
                 this.registerMessageManager();
                 this.openApiLogin();
-
             },
             onItemSelect: function (oEvent) {
 

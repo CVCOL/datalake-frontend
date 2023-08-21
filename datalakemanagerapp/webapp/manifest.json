@@ -90,7 +90,9 @@
           "bundleName": "co.haina.datalakemanagerapp.i18n.i18n"
         }
       },
-      
+      "viewModel": {
+        "type": "sap.ui.model.json.JSONModel"
+      },
       "LoginModel": {
         "type": "sap.ui.model.json.JSONModel"
       },
@@ -141,6 +143,11 @@
           "target": "TargetrtMonitor"
         },
         {
+          "name": "rtLogread",
+          "pattern": "rtLogread",
+          "target": "TargetrtLogread"
+        },
+        {
           "name": "rtLogapp",
           "pattern": "rtLogapp",
           "target": "TargetrtLogapp"
@@ -173,6 +180,16 @@
           "viewId": "readingMonitor",
           "viewPath": "co.haina.datalakemanagerapp.view",
           "viewName": "readingMonitor",
+          "viewType": "XML",
+          "parent": "Targetadmindashboard",
+          "controlId": "parentNavContainer",
+          "controlAggregation": "pages",
+          "transition": "slide"
+        },
+        "TargetrtLogread": {
+          "viewId": "readingLog",
+          "viewPath": "co.haina.datalakemanagerapp.view",
+          "viewName": "readingLog",
           "viewType": "XML",
           "parent": "Targetadmindashboard",
           "controlId": "parentNavContainer",

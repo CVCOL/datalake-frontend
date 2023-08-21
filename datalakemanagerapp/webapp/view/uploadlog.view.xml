@@ -1,17 +1,37 @@
 <mvc:View controllerName="co.haina.datalakemanagerapp.controller.uploadlog"
-	xmlns:html="http://www.w3.org/1999/xhtml" 
-	xmlns:mvc="sap.ui.core.mvc" 
-	displayBlock="true"
+	xmlns:html="http://www.w3.org/1999/xhtml"
+	xmlns:mvc="sap.ui.core.mvc" displayBlock="true"
 	xmlns="sap.m"
-    height="100%" 
-	busyIndicatorDelay="0">
-	<Page id="_IDGenPage1" showHeader="true" enableScrolling="false" title="{modelView>/title}" busy="{modelView>/busy}" class="sapUiContentPadding"
-		busyIndicatorDelay="0">
-		<content>		
-		<Button
-		text="Pagina prueba upload log"
-		icon="sap-icon://menu2"
-		press=".onCollapseExpandPress" />	
-		</content>		
+	xmlns:c="sap.ui.core"
+	xmlns:tbl="sap.ui.table" height="100%" busyIndicatorDelay="0">
+	<Page id="_IDGenPage1" showHeader="true" enableScrolling="false" title="{viewModel>/title}" busy="{viewModel>/busy}" class="sapUiContentPadding" busyIndicatorDelay="0">
+		<content>			
+			<tbl:Table id="tblLog" width="auto" showNoData="true" noDataText="{i18n>noData}" selectionMode="None"
+					   class="sapUiResponsiveMargin"  enableColumnFreeze="true">
+				<tbl:extension>
+					<OverflowToolbar id="_IDGenOverflowToolbar1" width="auto" height="auto" design="Transparent" visible="true" enabled="true">
+						<content>
+							<Label id="_IDGenLabel1" text="{i18n>dateFrom}" labelFor="dtFrom"/>
+							<DatePicker id="dtFrom" width="20%" value="{
+                                                            'path':'viewModel>/valueDateFrom',
+                                                            'type':'sap.ui.model.type.Date',
+                                                            'formatOptions': {
+                                                                'pattern': 'yyyy-MM-dd'
+                                                            }
+                                                        }" class="sapUiSmallMarginBottom"/>
+							<Label id="_IDGenLabel2" text="{i18n>dateTo}" labelFor="dtTo"/>
+							<DatePicker id="dtTo" width="20%" value="{
+                                                            'path':'viewModel>/valueDateTo',
+                                                            'type':'sap.ui.model.type.Date',
+                                                            'formatOptions': {
+                                                                'pattern': 'yyyy-MM-dd'
+                                                            }
+                                                        }" class="sapUiSmallMarginBottom"/>							
+							<Button id="btnSearch" icon="sap-icon://search" text="{i18n>search}" press="._getLog($event,'upload')" />
+						</content>
+					</OverflowToolbar>
+				</tbl:extension>
+			</tbl:Table>			
+		</content>
 	</Page>
 </mvc:View>

@@ -20,7 +20,7 @@ sap.ui.define([
 
 	const cNumberDecimal = 5,
 		  cDefaultNumValue = "0.00000",
-		  cBaseurl = "http://localhost:8002/"; //"https://dev-polaris-api.egehaina.com/";
+		  cBaseurl = "http://localhost:8002/";//"https://dev-polaris-api.egehaina.com/";
 
 	return Controller.extend("co.haina.datalakemanagerapp.controller.BaseController", {
 		/**
@@ -73,7 +73,8 @@ sap.ui.define([
 		},
 		apiLogin: function(){
 			//inicializar el modelo de Login
-			this.getView().setBusy(true);
+			this.setViewBusy(true);
+
 			var loginInfo = {
 				user: this.getView().byId("user").getValue(),
 				password: this.getView().byId("password").getValue(),
@@ -85,8 +86,87 @@ sap.ui.define([
 
 			this.getToke("");
 			this.closeApiLogin();
-			this.getView().setBusy(false);
+			this.setViewBusy(false);
 			MessageToast.show(this.getResourceBundle().getText("userLogin"));
+		},
+		_getLog: function(oEvent,LogType="app"){
+			
+			this.setViewBusy(true);
+
+			var dateTo="".concat(this.getView().byId('dtTo').getValue()),
+				dateFrom = "".concat(this.getView().byId('dtFrom').getValue());                    
+
+			var oLoginModel = this.getLoginModel();
+			var data =  typeof this.getOwnerComponent().getModel() == 'undefined' ? new sap.ui.model.json.JSONModel() : this.getOwnerComponent().getModel();
+
+			var settings = {
+							"url": oLoginModel.endpoint_backend+"getLogs?date_from="+dateFrom+"&date_to="+dateTo+"&logType="+LogType,
+							"method": "GET",
+							"timeout": 0,
+							"headers": {								
+								"Authorization": "Bearer "+oLoginModel.token
+							},
+							"processData": false,
+							"contentType": false,							
+							success: function(result) { 
+								
+								this.setViewBusy(false);
+
+								var tblLog = this.getView().byId('tblLog'),
+									logValues = [];
+								
+								tblLog.removeAllColumns();
+
+								if (result.length < 1){
+									MessageToast.show(this.getResourceBundle().getText("noData"));
+									return;
+								}
+								//Crear columnas
+								var colDesc= Object.keys(result[0]);
+								for (var j = 0; j < colDesc.length; j++) {
+																	
+									tblLog.addColumn(new sap.ui.table.Column({
+										label: new sap.ui.commons.Label({text: result[0][colDesc[j]]}),             // Creates an Header with value defined for the text attribute
+										template: new sap.ui.commons.TextField().bindProperty("value", colDesc[j] ), // binds the value into the text field defined using JSON
+										sortProperty: colDesc[j],        // enables sorting on the column
+										filterProperty: colDesc[j],       // enables set filter on the column
+										width: "125px"                  // width of the column								
+									}));
+								}
+
+								//enlazar datos
+								for (var j = 1; j < result.length; j++) {
+									logValues.push(result[j])	
+								}
+																
+								data.setProperty("/LogValues", logValues);
+								data.setProperty("/LogValuesCount", logValues.length);
+								this.getOwnerComponent().setModel(data);
+								tblLog.setModel(data);
+								tblLog.bindRows("/LogValues");
+
+
+							}.bind(this),
+							error: function(e) { 
+								this.setViewBusy(false);
+								if ( typeof e.responseJSON !== 'undefined' ){
+									this.showResponseMessages(JSON.stringify(e.responseJSON));
+								}else{
+									this.showResponseMessages(e);
+								}
+							 }.bind(this)
+							};
+
+			var response = $.ajax(settings);
+
+		},            
+		setViewBusy:function (state){
+			//Consultar modelo			
+			var oviewModel =  typeof this.getOwnerComponent().getModel("viewModel") == 'undefined' ? new JSONModel() : this.getOwnerComponent().getModel("viewModel");
+			//actualizar propiedad en caso de que ya la tenga
+			oviewModel.setProperty("/busy/", state);
+
+            this.getOwnerComponent().setModel(oviewModel, "viewModel");	
 		},
 		closeApiLogin: function () {
 			this.oDialog.close();
@@ -128,7 +208,10 @@ sap.ui.define([
 					"token": ""
 				},
 				success: function(result) { },
-				error: function(e) { this.showResponseMessages(e) }
+				error: function(e) { 
+					this.setViewBusy(false);
+					this.showResponseMessages(e.responseJSON) 
+				}.bind(this)
 			});						
 			if ( typeof token.responseJSON !== 'undefined' ) {
 				oLoginModel.token = token.responseJSON.access_token;
@@ -245,8 +328,8 @@ sap.ui.define([
 			
 			if (typeof oResponse.headers == 'undefined' && typeof oResponse.statusText != 'undefined'){
 				oResponseJson = JSON.parse('{"severity": "error", "message": "'+oResponse.statusText+'" }');
-			}else{
-				oResponseJson = JSON.parse(oResponse.headers["sap-message"]);
+			}else if (typeof oResponse.headers == 'undefined' ){
+				oResponseJson = JSON.parse('{"severity": "error", "message": "'+oResponse.replace('{','').replace('}','')+'" }');
 			}
 
 			if (typeof oResponseJson != 'undefined' ) {

@@ -2,41 +2,43 @@ sap.ui.define([
     "./BaseController",
     "sap/ui/model/json/JSONModel",
     "sap/m/MessageToast",
-    "sap/ui/core/message/Message"
+    "sap/ui/core/message/Message",
+	"sap/ui/core/date/UI5Date",	
+	"sap/ui/core/MessageType",
+	"sap/ui/commons/Label"
 ],
     /**
      * @param {typeof sap.ui.core.mvc.Controller} Controller
      */
-    function (Controller, JSONModel, MessageToast, Message) {
+    function (Controller, JSONModel, MessageToast, Message, UI5Date, MessageType, Label) {
         "use strict";
-        
-        var version = "DEFAULT";	
+
 	    var that = this;
 
         return Controller.extend("co.haina.datalakemanagerapp.controller.applicationlog", {
             onInit: function () {
-                var oModelV = new JSONModel({
-                    busy: false,
-                    title: "",
-                    versionStatus: ""//this.getResourceBundle().getText("status0")
-                });
-                this.setModel(oModelV, "modelView");
+                //Asignar valores de fecha por defecto
+                let date = new Date(),
+                month = ("0" + (date.getMonth())).slice(-2),
+                day = ("0" + date.getDate()).slice(-2),
+                year = date.getFullYear();
 
+                var oModel = new JSONModel({
+                    busy: false,
+                    title: this.getResourceBundle().getText("logapp"),
+                    valueDateFrom: UI5Date.getInstance(year, month, '01'),
+                    valueDateTo: UI5Date.getInstance(year, month, day)
+                });
+                this.getOwnerComponent().setModel(oModel, "viewModel");
+                
                 this.initMessageManager();
                 var oMessageManager, oView;
                 oView = this.getView();
-
                 // set message model
                 oMessageManager = sap.ui.getCore().getMessageManager();
                 oView.setModel(oMessageManager.getMessageModel(), "message");
-
                 // or just do it for the whole view
                 oMessageManager.registerObject(oView, true);
-
-
-
-                //var myRoute = this.getOwnerComponent().getRouter().getRoute("rtChCommodities");
-                //myRoute.attachPatternMatched(this.onMyRoutePatternMatched, this);
 
                 if (this.getRouter().getRoute("rtLogapp")) {
                     this.getRouter().getRoute("rtLogapp").attachPatternMatched(this.onMyRoutePatternMatched, this);
@@ -44,46 +46,10 @@ sap.ui.define([
 
             },
             onMyRoutePatternMatched: function (event) {
-                var aFilter = [];
-
-                this.getVersionStatus({
-                    Version: version,
-                    Modulo: cModule
-                });
-                //Cargar datos
-                // this.getModel("modelView").setProperty("/title", (this.getView().getModel("i18n").getResourceBundle().getText("CommoditiesTitle") +
-                //     ": " + version).toString());
-
-                // aFilter.push(new Filter("Flag", FilterOperator.EQ, 'X'));
-
-                // this.fnConsultaDetalleCommodities(version);
-                // this.getView().byId("btnAdmin").setVisible(true);
-                // this.getView().byId("cmbYear").setVisible(true);
-                // this.Periodos = this.getPeriodos();
-
+                
             },
-
             onMyRoutePatternMatchedVersion: function (oEvent) {
-                this.initMessageManager();
-                SelectVersion.init(this, cModule);
-                SelectVersion.open();
-                this.getView().byId("btnAdmin").setVisible(false);
-                this.getView().byId("cmbYear").setVisible(false);
-                this.Periodos = this.getPeriodos();
-            },
-            onShowVersion: function (oData) {
-                var aFilter = [];
-                version = oData.idVersion;
-
-                this.getVersionStatus({
-                    Version: version,
-                    Modulo: cModule
-                });
-                this.getModel("modelView").setProperty("/title", (this.getView().getModel("i18n").getResourceBundle().getText("CommoditiesTitle") +
-                    ": " + oData.nameVersion).toString());
-
-                aFilter.push(new Filter("Version", FilterOperator.EQ, version));
-                this.fnConsultaDetalleCommodities(version);
-            }
+                
+            }            
         });
     });

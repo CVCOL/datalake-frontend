@@ -3,7 +3,7 @@
     xmlns:jsed="sap.ui.integration.widgets"
     xmlns:layout="sap.ui.layout"
     xmlns:ui="sap.ui.table">
-    <Page showHeader="true" title="{i18n>MonitorReading}" showFooter="true" showNavButton="false" busy="{viewModel>busy}" >
+    <Page showHeader="true" title="{i18n>MonitorReading}" showFooter="true" showNavButton="false" busy="{viewModel>/busy}" busyIndicatorDelay="0" >
         <content>
             <IconTabBar expandable="false" expanded="true" applyContentPadding="false" backgroundDesign="Solid" upperCase="false" visible="true" selectedKey="Ok">
                 <items>

@@ -20,7 +20,7 @@ sap.ui.define([
                     versionStatus: this.getResourceBundle().getText("status0")
                 });
                 this.setModel(oModelV, "modelView");
-    
+                    
                 this.initMessageManager();
                 var oMessageManager, oView;
                 oView = this.getView();
@@ -35,10 +35,16 @@ sap.ui.define([
                 var oFileUploader = oEvent.getSource();
                 var file = oEvent.getParameter("files")[0];
                 var form = new FormData();
-          
+                var selectedProcess = this.getView().byId('grpContingencia').getSelectedButton().getId();
+                var oLoginModel = this.getLoginModel();                
+                var arrSelectedProcess = selectedProcess.split('--');
+                
+                selectedProcess = arrSelectedProcess[arrSelectedProcess.length - 1];
+
                 form.append("file", file);
                 form.append("idFile", oFileUploader.getName() );
-                form.append("User", 'polarissrv' );
+                form.append("User", oLoginModel.user );
+                form.append("idProceso", selectedProcess );
        
                 var oLoginModel = this.getLoginModel();		
                 var url = oLoginModel.endpoint_backend+"uploadmanualreading";

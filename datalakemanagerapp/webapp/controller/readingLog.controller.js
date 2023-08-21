@@ -15,7 +15,7 @@ sap.ui.define([
 
 	    var that = this;
 
-        return Controller.extend("co.haina.datalakemanagerapp.controller.uploadlog", {
+        return Controller.extend("co.haina.datalakemanagerapp.controller.readingLog", {
             onInit: function () {
                 //Asignar valores de fecha por defecto
                 let date = new Date(),
@@ -25,7 +25,6 @@ sap.ui.define([
 
                 var oModel = new JSONModel({
                     busy: false,
-                    title: this.getResourceBundle().getText("logupload"),
                     valueDateFrom: UI5Date.getInstance(year, month, '01'),
                     valueDateTo: UI5Date.getInstance(year, month, day)
                 });
