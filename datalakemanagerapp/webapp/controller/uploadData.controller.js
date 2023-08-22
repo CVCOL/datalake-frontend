@@ -32,6 +32,9 @@ sap.ui.define([
     
             },
             onFileUpload: function(oEvent) {
+                
+                this.setViewBusy(true);
+
                 var oFileUploader = oEvent.getSource();
                 var file = oEvent.getParameter("files")[0];              
                 var form = new FormData();
@@ -62,8 +65,15 @@ sap.ui.define([
                     processData: false,
                     contentType: false,
                     data: form,                       
-                    success: function(result) { },
-                    error: function(e) { this.showResponseMessages(e) }
+                    success: function(result) {
+                        this.setViewBusy(false);
+                        var resultJson = {"message": result["Mensaje"], "severity": "info" }
+                        this.showResponseMessages(resultJson);
+                    }.bind(this),
+                    error: function(e) { 
+                        this.setViewBusy(false);
+                        this.showResponseMessages(e) 
+                    }.bind(this)
                 });
             }
         });

@@ -19,7 +19,7 @@
                         <tnt:NavigationListItem id="_IDGenNavigationListItem3" text="{i18n>uploadreadings}" key="rtUploadreadings" />
                     </tnt:NavigationListItem>
                     <tnt:NavigationListItem id="_IDGenNavigationListItem4" text="{i18n>log}" icon="sap-icon://it-host">
-                        <tnt:NavigationListItem text="{i18n>logread}" id="logread" key="rtlogread" />
+                        <tnt:NavigationListItem text="{i18n>logread}" id="logread" key="rtLogread" />
                         <tnt:NavigationListItem text="{i18n>logapp}" id="logapp" key="rtLogapp" />
                         <tnt:NavigationListItem text="{i18n>logupload}" id="logupload" key="rtLogupload" />
                     </tnt:NavigationListItem>

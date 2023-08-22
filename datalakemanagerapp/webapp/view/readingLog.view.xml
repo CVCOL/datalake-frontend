@@ -27,7 +27,7 @@
                                                                 'pattern': 'yyyy-MM-dd'
                                                             }
                                                         }" class="sapUiSmallMarginBottom"/>							
-							<Button id="btnSearch" icon="sap-icon://search" text="{i18n>search}" press="._getLog($event,'app')" />
+							<Button id="btnSearch" icon="sap-icon://search" text="{i18n>search}" press="._getLog($event,'readings')" />
 						</content>
 					</OverflowToolbar>
 				</tbl:extension>

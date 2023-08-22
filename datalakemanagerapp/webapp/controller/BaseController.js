@@ -150,7 +150,7 @@ sap.ui.define([
 							error: function(e) { 
 								this.setViewBusy(false);
 								if ( typeof e.responseJSON !== 'undefined' ){
-									this.showResponseMessages(JSON.stringify(e.responseJSON));
+									this.showResponseMessages(e.responseJSON);
 								}else{
 									this.showResponseMessages(e);
 								}
@@ -319,17 +319,30 @@ sap.ui.define([
 			pMessageTitleOk = this.getResourceBundle().getText("SuccessTitle")) {
 
 			var msgType = MessageType.Error,
+				msg_json="",
 				MessageTitle,
 				oResponseJson;
 
 			if (oResponse === undefined) {
 				return false;
 			}
-			
-			if (typeof oResponse.headers == 'undefined' && typeof oResponse.statusText != 'undefined'){
+			//Mensjae en formato general
+			if (typeof oResponse.severity != 'undefined' && typeof oResponse.severity != 'message' ){
+				oResponseJson = oResponse;
+			}else if (typeof oResponse.headers == 'undefined' && typeof oResponse.statusText != 'undefined'){
 				oResponseJson = JSON.parse('{"severity": "error", "message": "'+oResponse.statusText+'" }');
+			}else if (typeof oResponse.headers == 'undefined' && typeof oResponse.detail != 'undefined' ){
+				oResponseJson = JSON.parse('{"severity": "error", "message": "'+oResponse.detail+'" }' );
 			}else if (typeof oResponse.headers == 'undefined' ){
-				oResponseJson = JSON.parse('{"severity": "error", "message": "'+oResponse.replace('{','').replace('}','')+'" }');
+				msg_json = JSON.stringify(oResponse).replace(/\\n/g, "\\n")
+													.replace(/\\'/g, "\\'")
+													.replace(/\\"/g, '\\"')
+													.replace(/\\&/g, "\\&")
+													.replace(/\\r/g, "\\r")
+													.replace(/\\t/g, "\\t")
+													.replace(/\\b/g, "\\b")
+													.replace(/\\f/g, "\\f");
+				oResponseJson = JSON.parse('{"severity": "error", "message": "'+msg_json+'" }');
 			}
 
 			if (typeof oResponseJson != 'undefined' ) {

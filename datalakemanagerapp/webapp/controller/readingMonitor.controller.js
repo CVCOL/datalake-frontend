@@ -1,5 +1,5 @@
 sap.ui.define([
-    "./BaseController",
+	"./BaseController",
 	"sap/m/MessageBox",
 	"sap/ui/model/Filter",
 	"sap/ui/model/FilterOperator",
@@ -8,182 +8,204 @@ sap.ui.define([
 	"sap/ui/core/message/Message",
 	"sap/ui/core/MessageType",
 	"sap/ui/commons/Label"
-], function(BaseController, MessageBox, Filter, FilterOperator, JSONModel, UI5Date, Message, MessageType, Label) {
+], function (BaseController, MessageBox, Filter, FilterOperator, JSONModel, UI5Date, Message, MessageType, Label) {
 	"use strict";
-    const date = new Date();
+	const date = new Date();
 	var that = this;
-		
 
-	return BaseController.extend("co.haina.datalakemanagerapp.controller.readingMonitor", {	
 
-		handleRouteMatched: function(oEvent) {
-			
+	return BaseController.extend("co.haina.datalakemanagerapp.controller.readingMonitor", {
+
+		handleRouteMatched: function (oEvent) {
+
 		},
-		onInit: function() {
+		onInit: function () {
 			//this.getOwnerComponent().getModel("ProfileValuesModel").metadataLoaded().then(this._onMetadataLoaded.bind(this));
-			
+
 			//Asignar valores de fecha por defecto
 			let date = new Date(),
-			 	month = ("0" + (date.getMonth())).slice(-2),
-			 	day = ("0" + date.getDate()).slice(-2),
-			 	year = date.getFullYear();
-			
+				month = ("0" + (date.getMonth())).slice(-2),
+				day = ("0" + date.getDate()).slice(-2),
+				year = date.getFullYear();
+
 			var oModel = new JSONModel({
-				busy: true,
+				busy: false,
 				valueDateFrom: UI5Date.getInstance(year, month, '01'),
 				valueDateTo: UI5Date.getInstance(year, month, day),
 				valueDateFromI: UI5Date.getInstance(year, month, '01'),
 				valueDateToI: UI5Date.getInstance(year, month, day)
 			});
-			this.setModel(oModel, "viewModel");			
+			this.setModel(oModel, "viewModel");
 			this._getCompleteProfileValues();
 			this._getMissingReading();
 		},
-		
+
 		_getInconsistentReading: function () {
-			var dateTo="".concat(this.getView().byId('dtToI').getValue()),
-				dateFrom = "".concat(this.getView().byId('dtFromI').getValue());	
+
+			this.setViewBusy(true);
+
+			var dateTo = "".concat(this.getView().byId('dtToI').getValue()),
+				dateFrom = "".concat(this.getView().byId('dtFromI').getValue());
 
 			var oLoginModel = this.getLoginModel();
-			var data =  typeof this.getOwnerComponent().getModel() == 'undefined' ? new sap.ui.model.json.JSONModel() : this.getOwnerComponent().getModel();
+			var data = typeof this.getOwnerComponent().getModel() == 'undefined' ? new sap.ui.model.json.JSONModel() : this.getOwnerComponent().getModel();
 
 			var settings = {
-							"url": oLoginModel.endpoint_backend+"getInconsistentReading?date_from="+dateFrom+"&date_to="+dateTo,
-							"method": "GET",
-							"timeout": 0,
-							"headers": {								
-								"Authorization": "Bearer "+oLoginModel.token
-							},
-							"processData": false,
-							"contentType": false,							
-							success: function(result) { 
-								var tblInconsistent = this.getView().byId('tblInconsistent'),
-								InconsistentProfileValues = [];
-								if (result.length < 1)
-									return;
-								//Crear columnas
-								var colDesc= Object.keys(result[0]);
-								for (var j = 0; j < colDesc.length; j++) {
-																	
-									tblInconsistent.addColumn(new sap.ui.table.Column({
-										label: new sap.ui.commons.Label({text: result[0][colDesc[j]]}),             // Creates an Header with value defined for the text attribute
-										template: new sap.ui.commons.TextField().bindProperty("value", colDesc[j] ), // binds the value into the text field defined using JSON
-										sortProperty: colDesc[j],        // enables sorting on the column
-										filterProperty: colDesc[j],       // enables set filter on the column
-										width: "125px"                  // width of the column								
-									}));
-								}
+				"url": oLoginModel.endpoint_backend + "getInconsistentReading?date_from=" + dateFrom + "&date_to=" + dateTo,
+				"method": "GET",
+				"timeout": 0,
+				"headers": {
+					"Authorization": "Bearer " + oLoginModel.token
+				},
+				"processData": false,
+				"contentType": false,
+				success: function (result) {
+					this.setViewBusy(false);
+					var tblInconsistent = this.getView().byId('tblInconsistent'),
+						InconsistentProfileValues = [];
+					if (result.length < 1)
+						return;
+					//Crear columnas
+					var colDesc = Object.keys(result[0]);
+					for (var j = 0; j < colDesc.length; j++) {
 
-								//enlazar datos
-								for (var j = 1; j < result.length; j++) {
-									InconsistentProfileValues.push(result[j])	
-								}
-																
-								data.setProperty("/InconsistentProfileValues", InconsistentProfileValues);
-								data.setProperty("/InconsistentProfileValuesCount", InconsistentProfileValues.length);
-								this.getOwnerComponent().setModel(data);
-								tblInconsistent.setModel(data);
-								tblInconsistent.bindRows("/InconsistentProfileValues");
+						tblInconsistent.addColumn(new sap.ui.table.Column({
+							label: new sap.ui.commons.Label({ text: result[0][colDesc[j]] }),             // Creates an Header with value defined for the text attribute
+							template: new sap.ui.commons.TextField().bindProperty("value", colDesc[j]), // binds the value into the text field defined using JSON
+							sortProperty: colDesc[j],        // enables sorting on the column
+							filterProperty: colDesc[j],       // enables set filter on the column
+							width: "125px"                  // width of the column								
+						}));
+					}
+
+					//enlazar datos
+					for (var j = 1; j < result.length; j++) {
+						InconsistentProfileValues.push(result[j])
+					}
+
+					data.setProperty("/InconsistentProfileValues", InconsistentProfileValues);
+					data.setProperty("/InconsistentProfileValuesCount", InconsistentProfileValues.length);
+					this.getOwnerComponent().setModel(data);
+					tblInconsistent.setModel(data);
+					tblInconsistent.bindRows("/InconsistentProfileValues");
 
 
-							}.bind(this),
-							error: function(e) { console.log(e.message); }
-							};
+				}.bind(this),
+				error: function (e) {
+					this.setViewBusy(false);
+					console.log(e.message);
+				}.bind(this)
+			};
 
 			var response = $.ajax(settings);
 		},
-		_getMissingReading: function (){
-			
-			var dateTo="".concat(this.getView().byId('dtToM').getValue()),
+		_getMissingReading: function () {
+
+			this.setViewBusy(true);
+
+			var dateTo = "".concat(this.getView().byId('dtToM').getValue()),
 				dateFrom = "".concat(this.getView().byId('dtFromM').getValue()),
-				serialNo = this.getView().byId('inpSerialNo').getValue();	
+				serialNo = this.getView().byId('inpSerialNo').getValue();
 
 			var oLoginModel = this.getLoginModel();
-			var data =  typeof this.getOwnerComponent().getModel() == 'undefined' ? new sap.ui.model.json.JSONModel() : this.getOwnerComponent().getModel();
+			var data = typeof this.getOwnerComponent().getModel() == 'undefined' ? new sap.ui.model.json.JSONModel() : this.getOwnerComponent().getModel();
 
 			var settings = {
-							"url": oLoginModel.endpoint_backend+"getMissingReading?date_from="+dateFrom+"&date_to="+dateTo+"&serialNo="+serialNo,
-							"method": "GET",
-							"timeout": 0,
-							"headers": {								
-								"Authorization": "Bearer "+oLoginModel.token
-							},
-							"processData": false,
-							"contentType": false,							
-							success: function(result) { 
-								var tblMissing = this.getView().byId('tblMissing'),
-									missingValues = [];
-								
-								tblMissing.removeAllColumns();
+				"url": oLoginModel.endpoint_backend + "getMissingReading?date_from=" + dateFrom + "&date_to=" + dateTo + "&serialNo=" + serialNo,
+				"method": "GET",
+				"timeout": 0,
+				"headers": {
+					"Authorization": "Bearer " + oLoginModel.token
+				},
+				"processData": false,
+				"contentType": false,
+				success: function (result) {
 
-								if (result.length < 1)
-									return;
-								//Crear columnas
-								var colDesc= Object.keys(result[0]);
-								for (var j = 0; j < colDesc.length; j++) {
-																	
-									tblMissing.addColumn(new sap.ui.table.Column({
-										label: new sap.ui.commons.Label({text: result[0][colDesc[j]]}),             // Creates an Header with value defined for the text attribute
-										template: new sap.ui.commons.TextField().bindProperty("value", colDesc[j] ), // binds the value into the text field defined using JSON
-										sortProperty: colDesc[j],        // enables sorting on the column
-										filterProperty: colDesc[j],       // enables set filter on the column
-										width: "125px"                  // width of the column								
-									}));
-								}
+					this.setViewBusy(false);
 
-								//enlazar datos
-								for (var j = 1; j < result.length; j++) {
-									missingValues.push(result[j])	
-								}
-																
-								data.setProperty("/MissingProfileValues", missingValues);
-								data.setProperty("/MissingProfileValuesCount", missingValues.length);
-								this.getOwnerComponent().setModel(data);
-								tblMissing.setModel(data);
-								tblMissing.bindRows("/MissingProfileValues");
+					var tblMissing = this.getView().byId('tblMissing'),
+						missingValues = [];
+
+					tblMissing.removeAllColumns();
+
+					if (result.length < 1)
+						return;
+					//Crear columnas
+					var colDesc = Object.keys(result[0]);
+					for (var j = 0; j < colDesc.length; j++) {
+
+						tblMissing.addColumn(new sap.ui.table.Column({
+							label: new sap.ui.commons.Label({ text: result[0][colDesc[j]] }),             
+							template: new sap.ui.commons.TextField().bindProperty("value", colDesc[j]), // binds the value into the text field defined using JSON
+							sortProperty: colDesc[j],        // enables sorting on the column
+							filterProperty: colDesc[j],       // enables set filter on the column
+							width: "125px"                  // width of the column								
+						}));
+					}
+					//agregar columna para lectura faltante
+					// tblMissing.addColumn(new sap.ui.table.Column({
+					// 	label: new sap.ui.commons.Label({ text: "Valor de Contingencia" }),             
+					// 	template: new sap.ui.commons.TextField({editable: true}).bindProperty("value", 0), // binds the value into the text field defined using JSON
+					// 	sortProperty: colDesc[j],        // enables sorting on the column
+					// 	filterProperty: colDesc[j],       // enables set filter on the column
+					// 	width: "125px"                  // width of the column								
+					// }));
+					//enlazar datos
+					for (var j = 1; j < result.length; j++) {
+						missingValues.push(result[j])
+					}
+
+					data.setProperty("/MissingProfileValues", missingValues);
+					data.setProperty("/MissingProfileValuesCount", missingValues.length);
+					this.getOwnerComponent().setModel(data);
+					tblMissing.setModel(data);
+					tblMissing.bindRows("/MissingProfileValues");
 
 
-							}.bind(this),
-							error: function(e) { console.log(e.message); }
-							};
+				}.bind(this),
+				error: function (e) {
+					this.setViewBusy(false);
+					console.log(e.message);
+				}.bind(this)
+			};
 
 			var response = $.ajax(settings);
 
 		},
-		_getCompleteProfileValues: function (){
-			
-			// this.getView().setBusy(true);
-			// this.getModel("viewModel").setProperty("/busy", true);
+		_getCompleteProfileValues: function () {
 
+			this.setViewBusy(true);
+			
 			var oModel = this.getOwnerComponent().getModel("ProfileValuesModel"),
 				oFilter = [],
-				dateTo="".concat(this.getView().byId('dtTo').getValue(),"T00:00:00.001"),
-				dateFrom = "".concat(this.getView().byId('dtFrom').getValue(),"T00:00:00.001");					
-			
-		    var data =  typeof this.getOwnerComponent().getModel() == 'undefined' ? new sap.ui.model.json.JSONModel() : this.getOwnerComponent().getModel();
-			
+				dateTo = "".concat(this.getView().byId('dtTo').getValue(), "T00:00:00.001"),
+				dateFrom = "".concat(this.getView().byId('dtFrom').getValue(), "T00:00:00.001");
+
+			var data = typeof this.getOwnerComponent().getModel() == 'undefined' ? new sap.ui.model.json.JSONModel() : this.getOwnerComponent().getModel();
+
 			oFilter.push(new Filter({
 				path: "ProfDate",
 				operator: FilterOperator.BT,
 				value1: Date.parse(dateFrom),
 				value2: Date.parse(dateTo)
-			 }));
+			}));
 
 			oFilter.push(new Filter("Profile", FilterOperator.EQ, this.getView().byId('inpProfile').getValue()));
 			oFilter.push(new Filter("ValueStatus", FilterOperator.EQ, 'EX01'));
-			oFilter.push(new Filter("TimeZone", FilterOperator.EQ, "UTC-4".toString() ));
-			 			 
+			oFilter.push(new Filter("TimeZone", FilterOperator.EQ, "UTC-4".toString()));
+
 			oModel.read("/ProfilesValueRelatedSet", {
 				filters: oFilter,
 				success: function (oData, oResponse) {
-					
+					this.setViewBusy(false);
 					data.setProperty("/CompleteProfileValues", oData.results);
 					data.setProperty("/CompleteProfileValuesCount", oData.results.length);
-					this.getOwnerComponent().setModel(data);					
+					this.getOwnerComponent().setModel(data);
 
 				}.bind(this),
 				error: function (oError) {
-					
+
+					this.setViewBusy(false);
 					data.setProperty("/CompleteProfileValues", []);
 					data.setProperty("/CompleteProfileValuesCount", 0);
 					this.getOwnerComponent().setModel(data);

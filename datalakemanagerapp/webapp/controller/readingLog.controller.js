@@ -25,6 +25,7 @@ sap.ui.define([
 
                 var oModel = new JSONModel({
                     busy: false,
+                    title: this.getResourceBundle().getText("logread"),
                     valueDateFrom: UI5Date.getInstance(year, month, '01'),
                     valueDateTo: UI5Date.getInstance(year, month, day)
                 });
@@ -39,8 +40,8 @@ sap.ui.define([
                 // or just do it for the whole view
                 oMessageManager.registerObject(oView, true);
 
-                if (this.getRouter().getRoute("rtLogapp")) {
-                    this.getRouter().getRoute("rtLogapp").attachPatternMatched(this.onMyRoutePatternMatched, this);
+                if (this.getRouter().getRoute("rtlogread")) {
+                    this.getRouter().getRoute("rtlogread").attachPatternMatched(this.onMyRoutePatternMatched, this);
                 }
 
             },
