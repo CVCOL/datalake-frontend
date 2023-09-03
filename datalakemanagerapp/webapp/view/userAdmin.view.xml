@@ -1,0 +1,23 @@
+<mvc:View controllerName="co.haina.datalakemanagerapp.controller.userAdmin"
+	xmlns:html="http://www.w3.org/1999/xhtml"
+	xmlns:mvc="sap.ui.core.mvc" displayBlock="true"
+	xmlns="sap.m"
+	xmlns:c="sap.ui.core"
+	xmlns:tbl="sap.ui.table" height="100%" busyIndicatorDelay="0">
+	<Page id="_IDGenPage1" showHeader="true" enableScrolling="false" title="{viewModel>/title}" busy="{viewModel>/busy}" class="sapUiContentPadding" busyIndicatorDelay="0">
+		<content>			
+			<tbl:Table id="tblUser" width="auto" showNoData="true" selectionMode="None"
+					   class="sapUiResponsiveMargin"  enableColumnFreeze="true">
+				<tbl:extension>
+					<OverflowToolbar id="_IDGenOverflowToolbar1" width="auto" height="auto" design="Transparent" visible="true" enabled="true" >
+						<content>
+                            <ToolbarSpacer id="_sep1"/>
+                            <Button id="btnSearch" icon="sap-icon://search" text="{i18n>search}" press=".getUsers($event,'app')" />			
+							<Button id="btnCreate" icon="sap-icon://add-employee" text="{i18n>Create}" press=".onCreateUser" />
+						</content>
+					</OverflowToolbar>
+				</tbl:extension>
+			</tbl:Table>			
+		</content>
+	</Page>
+</mvc:View>

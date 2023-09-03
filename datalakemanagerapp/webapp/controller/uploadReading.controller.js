@@ -2,24 +2,24 @@ sap.ui.define([
     "./BaseController",
 	"sap/ui/model/json/JSONModel",
 	"sap/m/MessageToast",	
-	"sap/ui/core/message/Message"
+	"sap/ui/core/message/Message",
+    "sap/ui/core/date/UI5Date"
 ],
     /**
      * @param {typeof sap.ui.core.mvc.Controller} Controller
      */
-    function (Controller, JSONModel, Message) {
+    function (Controller, JSONModel, MessageToast, Message, UI5Date) {
         "use strict";
         var that = this;
 
         return Controller.extend("co.haina.datalakemanagerapp.controller.uploadReading", {
             onInit: function () {
 
-                var oModelV = new JSONModel({
+                var oModel = new JSONModel({
                     busy: false,
-                    title: "",
-                    versionStatus: this.getResourceBundle().getText("status0")
+                    title: this.getResourceBundle().getText("uploadreadings")                    
                 });
-                this.setModel(oModelV, "modelView");
+                this.getOwnerComponent().setModel(oModel, "viewModel");
                     
                 this.initMessageManager();
                 var oMessageManager, oView;
@@ -32,6 +32,8 @@ sap.ui.define([
     
             },
             onFileUpload: function(oEvent) {
+                this.setViewBusy(true);
+                
                 var oFileUploader = oEvent.getSource();
                 var file = oEvent.getParameter("files")[0];
                 var form = new FormData();
@@ -59,8 +61,15 @@ sap.ui.define([
                     processData: false,
                     contentType: false,
                     data: form,                       
-                    success: function(result) { },
-                    error: function(e) { this.showResponseMessages(e) }
+                    success: function(result) { 
+                        this.setViewBusy(false);
+                        var resultJson = {"message": result["Mensaje"], "severity": result["Tipo_Mensaje"] }
+                        this.showResponseMessages(resultJson);
+                    }.bind(this),
+                    error: function(e) { 
+                        this.setViewBusy(false);
+                        this.showResponseMessages(e)  
+                    }.bind(this)
                 });
     
             }

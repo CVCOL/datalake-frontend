@@ -2,7 +2,7 @@
 	xmlns:mvc="sap.ui.core.mvc" displayBlock="true"
 	xmlns:m="sap.m"
 	xmlns:u="sap.ui.unified">
-	<m:Page id="page" title="{i18n>title}">
+	<m:Page id="page" title="{viewModel>/title}" busy="{viewModel>/busy}" busyIndicatorDelay="0" >
 		<m:content>
 			<m:VBox id="_IDGenVBox1">
 				<m:Panel id="_IDGenPanel1" headerText="OC">
@@ -26,10 +26,10 @@
 					id="FilePeriod"
 					width="15%"
 					value="{
-						'path': '/valueFilePeriod',
+						'path': 'viewModel>/valueFilePeriod',
 						'type': 'sap.ui.model.type.Date',
 						'formatOptions': {
-							'pattern': 'MM-y'
+							'pattern': 'M/y'
 						}
 					}"
 					class="sapUiSmallMarginBottom"/>

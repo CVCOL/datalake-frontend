@@ -332,6 +332,9 @@ sap.ui.define([
 			}else if (typeof oResponse.headers == 'undefined' && typeof oResponse.statusText != 'undefined'){
 				oResponseJson = JSON.parse('{"severity": "error", "message": "'+oResponse.statusText+'" }');
 			}else if (typeof oResponse.headers == 'undefined' && typeof oResponse.detail != 'undefined' ){
+				if (oResponse.detail.length > 0 ){
+					oResponse.detail = oResponse.detail[0]
+				}
 				oResponseJson = JSON.parse('{"severity": "error", "message": "'+oResponse.detail+'" }' );
 			}else if (typeof oResponse.headers == 'undefined' ){
 				msg_json = JSON.stringify(oResponse).replace(/\\n/g, "\\n")
@@ -347,7 +350,8 @@ sap.ui.define([
 
 			if (typeof oResponseJson != 'undefined' ) {
 				
-				if (oResponseJson.severity === "info") {
+				if (oResponseJson.severity === "info" || oResponseJson.severity === "successful" 
+					|| oResponseJson.severity === "information") {
 					msgType = MessageType.Success;
 					MessageTitle = pMessageTitleOk;
 				} else {

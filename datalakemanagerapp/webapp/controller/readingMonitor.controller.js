@@ -13,7 +13,6 @@ sap.ui.define([
 	const date = new Date();
 	var that = this;
 
-
 	return BaseController.extend("co.haina.datalakemanagerapp.controller.readingMonitor", {
 
 		handleRouteMatched: function (oEvent) {

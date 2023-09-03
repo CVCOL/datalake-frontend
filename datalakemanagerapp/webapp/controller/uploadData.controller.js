@@ -2,24 +2,31 @@ sap.ui.define([
     "./BaseController",
 	"sap/ui/model/json/JSONModel",
 	"sap/m/MessageToast",	
-	"sap/ui/core/message/Message"
+	"sap/ui/core/message/Message",
+    "sap/ui/core/date/UI5Date"
 ],
     /**
      * @param {typeof sap.ui.core.mvc.Controller} Controller
      */
-    function (Controller, JSONModel, Message) {
+    function (Controller, JSONModel, MessageToast, Message, UI5Date) {
         "use strict";
         var that = this;
 
         return Controller.extend("co.haina.datalakemanagerapp.controller.uploadData", {
             onInit: function () {
+                
+                let date = new Date(),    
+                oDateFormat = sap.ui.core.format.DateFormat.getDateInstance({pattern: "M/y"}),            
+				month = (date.getMonth()),
+				day = ("0" + date.getDate()).slice(-2),
+				year = date.getFullYear();
 
-                var oModelV = new JSONModel({
+                var oModel = new JSONModel({
                     busy: false,
-                    title: "",
-                    versionStatus: this.getResourceBundle().getText("status0")
+                    title: this.getResourceBundle().getText("uploadsource"),
+                    valueFilePeriod: oDateFormat.format(UI5Date.getInstance(year,month))
                 });
-                this.setModel(oModelV, "modelView");
+                this.getOwnerComponent().setModel(oModel, "viewModel");
     
                 this.initMessageManager();
                 var oMessageManager, oView;
@@ -36,7 +43,8 @@ sap.ui.define([
                 this.setViewBusy(true);
 
                 var oFileUploader = oEvent.getSource();
-                var file = oEvent.getParameter("files")[0];              
+                var file = oEvent.getParameter("files")[0];  
+                var period = "";            
                 var form = new FormData();
                 
                 if ( ( oFileUploader.getName() == "Derechoconexionunitario" || 
@@ -45,12 +53,20 @@ sap.ui.define([
                     && ( this.byId("FilePeriod").getValue() == "" ) ) {
                     this.byId("FilePeriod").setValueState("Error");
                     return;
-                }else{ this.byId("FilePeriod").setValueState("None"); }
+                }else{ 
+                    this.byId("FilePeriod").setValueState("None");            
+                }
+                
+                if (this.byId("FilePeriod").getValue() != ""){
+                    period = this.byId("FilePeriod").getValue();
+                    let arr_period = period.split('/');
+                    period = arr_period[0] + "/" + "01" + "/" + arr_period[1].substring(2);
+                }
 
                 form.append("file", file);
                 form.append("idFile", oFileUploader.getName() );
                 form.append("User", 'polarissrv' );
-                form.append("FilePeriod", this.byId("FilePeriod").getValue() );
+                form.append("FilePeriod", period );
 
                 var oLoginModel = this.getLoginModel();
                 var url = oLoginModel.endpoint_backend+"uploadfile";
@@ -67,7 +83,7 @@ sap.ui.define([
                     data: form,                       
                     success: function(result) {
                         this.setViewBusy(false);
-                        var resultJson = {"message": result["Mensaje"], "severity": "info" }
+                        var resultJson = {"message": result["Mensaje"], "severity": result["Tipo_Mensaje"] }
                         this.showResponseMessages(resultJson);
                     }.bind(this),
                     error: function(e) { 

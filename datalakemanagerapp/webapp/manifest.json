@@ -166,6 +166,11 @@
           "name": "rtUploadreadings",
           "pattern": "rtUploadreadings",
           "target": "TargetrtUploadreadings"
+        },
+        {
+          "name": "rtUserAdmin",
+          "pattern": "UserAdmin",
+          "target": "TargetUserAdmin"
         }
       ],
       "targets": {
@@ -230,6 +235,16 @@
           "viewId": "uploadlog",
           "viewPath": "co.haina.datalakemanagerapp.view",
           "viewName": "uploadlog",
+          "viewType": "XML",
+          "parent": "Targetadmindashboard",
+          "controlId": "parentNavContainer",
+          "controlAggregation": "pages",
+          "transition": "slide"
+        },
+        "TargetUserAdmin": {
+          "viewId": "userAdmin",
+          "viewPath": "co.haina.datalakemanagerapp.view",
+          "viewName": "userAdmin",
           "viewType": "XML",
           "parent": "Targetadmindashboard",
           "controlId": "parentNavContainer",
