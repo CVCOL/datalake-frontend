@@ -332,10 +332,22 @@ sap.ui.define([
 			}else if (typeof oResponse.headers == 'undefined' && typeof oResponse.statusText != 'undefined'){
 				oResponseJson = JSON.parse('{"severity": "error", "message": "'+oResponse.statusText+'" }');
 			}else if (typeof oResponse.headers == 'undefined' && typeof oResponse.detail != 'undefined' ){
-				if (oResponse.detail.length > 0 ){
+				if (Array.isArray(oResponse.detail)){
 					oResponse.detail = oResponse.detail[0]
 				}
-				oResponseJson = JSON.parse('{"severity": "error", "message": "'+oResponse.detail+'" }' );
+				msg_json = JSON.stringify(oResponse.detail).replace(/\\n/g, "\\n")
+															.replaceAll("'", "")
+															.replaceAll('"', "")
+															.replaceAll('/', '')
+															.replaceAll('\\', '')
+															.replace(/\\&/g, "\\&")
+															.replace(/\\r/g, "\\r")
+															.replace(/\\t/g, "\\t")
+															.replace(/\\b/g, "\\b")
+															.replace(/\\f/g, "\\f");
+				msg_json = msg_json.replaceAll("}", "");
+				msg_json = msg_json.replaceAll("{", "");
+				oResponseJson = JSON.parse('{"severity": "error", "message": "'+msg_json+'" }' );
 			}else if (typeof oResponse.headers == 'undefined' ){
 				msg_json = JSON.stringify(oResponse).replace(/\\n/g, "\\n")
 													.replace(/\\'/g, "\\'")

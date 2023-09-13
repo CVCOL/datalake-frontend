@@ -24,8 +24,8 @@
                         <tnt:NavigationListItem text="{i18n>logupload}" id="logupload" key="rtLogupload" />
                     </tnt:NavigationListItem>
                     <tnt:NavigationListItem id="_IDGenNavigationListItem5" text="{i18n>setting}" icon="sap-icon://user-settings">
-                        <tnt:NavigationListItem id="_IDGenNavigationListItem6" text="{i18n>meter}" />
-                        <tnt:NavigationListItem id="_IDGenNavigationListItem7" text="{i18n>parameters}" />
+                        <!-- <tnt:NavigationListItem id="_IDGenNavigationListItem6" text="{i18n>meter}" />
+                        <tnt:NavigationListItem id="_IDGenNavigationListItem7" text="{i18n>parameters}" /> -->
                         <!-- <tnt:NavigationListItem id="_IDGenNavigationListItem8" text="{i18n>uploadConf}" /> -->
                         <tnt:NavigationListItem id="_IDGenNavigationListUser" text="{i18n>userAdmin}" key="rtUserAdmin" />
                     </tnt:NavigationListItem>
